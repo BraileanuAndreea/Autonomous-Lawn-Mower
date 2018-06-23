@@ -1,0 +1,1708 @@
+\documentclass[12pt,a4paper]{report}
+%  \documentclass[tikz]{standalone}
+
+\usepackage[utf8]{inputenc} % pentru suport diacritice
+\usepackage[romanian]{babel} % setări pentru limba română
+ % \usepackage{pgfplots}
+%pt
+
+\usepackage{siunitx}
+\usepackage{esvect}
+%\pgfplotsset{width=10cm,compat=1.2}
+% \usepackage{pgfplots}
+ % \usepackage{bchart}
+\renewcommand\familydefault{\sfdefault} % sans serif
+% pt ohm
+\usepackage{siunitx}
+\usepackage[margin=2.54cm]{geometry}	% dimensiuni pagină și margini
+\usepackage{graphicx} % support the \includegraphics command and options
+% \def\colorstackpop{\special{color pop}}
+% formatting sections and subsections
+% \ifx\pdfextension\undefined \else
+%    \let\pdfoutput=\outputmode \def\pdfcolorstackinit{\pdffeedback colorstackinit}\fi
+\usepackage{subfig}
+\usepackage{textcase}
+\usepackage{titlesec}
+\titleformat{\chapter}{\large\bfseries\MakeUppercase}{\thechapter}{2ex}{}[\vspace*{-1.5cm}]
+\titleformat*{\section}{\large\bfseries}
+\titleformat*{\subsection}{\large\bfseries}
+\titleformat*{\subsubsection}{\large\bfseries}
+
+\usepackage{chngcntr}
+\counterwithout{figure}{chapter} % no chapter number in figure labels
+\counterwithout{table}{chapter} % no chapter number in table labels
+\counterwithout{equation}{chapter} % no chapter number in equation labels
+
+\usepackage{booktabs} % for much better looking tables
+\usepackage{url} % Useful for inserting web links nicely
+\usepackage[bookmarks,unicode,hidelinks]{hyperref}
+
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\usepackage{enumitem}
+\setlist{noitemsep}
+
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr}
+\pagestyle{empty}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+
+
+\newcommand{\HeaderLineSpace}{-0.5cm}
+\newcommand{\UniTextRO}{UNIVERSITATEA POLITEHNICA DIN BUCUREȘTI \\[\HeaderLineSpace]
+FACULTATEA DE AUTOMATICĂ ȘI CALCULATOARE \\[\HeaderLineSpace]
+DEPARTAMENTUL AUTOMATICĂ ȘI
+\\[\HeaderLineSpace] INFORMATICĂ INDUSTRIALĂ\\}
+\newcommand{\DiplomaRO}{PROIECT DE DIPLOMĂ}
+\newcommand{\AdvisorRO}{Coordonator științific:}
+\newcommand{\BucRO}{BUCUREȘTI}
+
+\newcommand{\UniTextEN}{UNIVERSITY POLITEHNICA OF BUCHAREST \\[\HeaderLineSpace]
+FACULTY OF AUTOMATIC CONTROL AND COMPUTERS \\[\HeaderLineSpace]
+AUTOMATIC CONTROL AND INDUSTRIAL INFORMATICS DEPARTMENT\\}
+\newcommand{\DiplomaEN}{DIPLOMA PROJECT}
+\newcommand{\AdvisorEN}{Thesis advisor:}
+\newcommand{\BucEN}{BUCHAREST}
+
+\newcommand{\frontPage}[6]{
+\begin{titlepage}
+\begin{center}
+{\Large #1}  % header (university, faculty, department)
+\vspace{50pt}
+\begin{tabular}{p{6cm}p{4cm}}
+\includegraphics[scale=0.8]{pics/upb-logo.jpg} &
+	\includegraphics[scale=0.7, clip=true]{pics/acs-logo.jpg}
+\end{tabular}
+
+\vspace{105pt}
+{\Huge #2}\\                           % diploma project text
+\vspace{40pt}
+{\Large #3}\\ \vspace{0pt}  % project title
+{\Large #4}\\                          % project subtitle
+\vspace{40pt}
+{\LARGE \Name}\\                   % student name
+\end{center}
+\vspace{60pt}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}p{6cm}r}
+&{\large\textbf{#5}}\vspace{10pt}\\      % scientific advisor
+&{\large \Advisor}                                    % advisor name
+\end{tabular*}
+\vspace{20pt}
+\begin{center}
+{\large\textbf{#6}}\\                                % bucharest
+\vspace{0pt}
+{\normalsize \Year}
+\end{center}
+\end{titlepage}
+}
+
+\newcommand{\frontPageRO}{\frontPage{\UniTextRO}{\DiplomaRO}{\ProjectTitleRO}{\ProjectSubtitleRO}{\AdvisorRO}{\BucRO}}
+\newcommand{\frontPageEN}{\frontPage{\UniTextEN}{\DiplomaEN}{\ProjectTitleEN}{\ProjectSubtitleEN}{\AdvisorEN}{\BucEN}}
+
+\linespread{1.5}
+\setlength\parindent{0pt}
+\setlength\parskip{.28cm}
+
+%% Abstract macro
+\newcommand{\AbstractPage}{
+\begin{titlepage}
+\textbf{\large SINOPSIS}\par
+\AbstractRO\par\vfill
+\textbf{\large ABSTRACT}\par
+\AbstractEN \vfill
+\end{titlepage}
+}
+
+%% Thank you macro
+\newcommand{\ThanksPage}{
+\begin{titlepage}
+{\noindent \large\textbf{MULȚUMIRI}}\\
+\Thanks
+\end{titlepage}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%          End of template definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%% Puteți elimina aceste linii din lucrare, servesc numai pentru template.
+\newcommand{\worktype}[1]{[\textit{#1}] }
+\newcommand{\dezvoltare}{\worktype{Dezvoltare de produs}}
+\newcommand{\cercetare}{\worktype{Cercetare}}
+\newcommand{\ambele}{\worktype{Ambele}}
+%%%
+
+
+%%
+%%   Campurile de mai jos trebuie modificate de autor. Modificati doar continutul, nu si numele fiecarei definitii
+%%
+\newcommand{\ProjectTitleRO}{Robot autonom de tuns iarba}
+\newcommand{\ProjectSubtitleRO}{Versiunea 2018}
+\newcommand{\ProjectTitleEN}{Autonomous Lawn Mower}
+\newcommand{\ProjectSubtitleEN}{2018 Version}
+\newcommand{\Name}{Brăileanu Andreea-Simona}
+\newcommand{\Advisor}{Conf.dr.ing. Ștefan Alexandru Mocanu}
+\newcommand{\Year}{2018}
+
+% Setări document
+\title{Proiect de diplomă}
+\author{\Name}
+\date{\Year}
+
+%%
+%%   Campurile aferente rezumatului
+%%
+\newcommand{\AbstractRO}{
+% Sinopsisul proiectului are rol de introducere, conținând atât o descriere pe scurt a problemei abordate cât și o enumerare sumară a rezultatelor și a concluziilor. Se recomandă ca sinopsisul să fie redactat într-un limbaj accesibil unei persoane nefamiliarizate cu domeniul, dar în același timp destul de specific pentru a oferi rapid o vedere de ansamblu asupra proiectului prezentat.
+% Sinopsisul proiectului va fi redactat atât în română cât și în engleză. Ca dimensiunea recomandată aceasta secțiune va avea maxim 200 de cuvinte pentru fiecare variantă. Împreună, ambele variante se vor încadra într-o singură pagină.
+
+
+
+TO DO: Această lucrare prezintă dezvoltarea și implementarea unui robot autonom de tuns iarba în vederea reducerii dependenței umane în activitatea de tundere a gazonului.}
+
+\newcommand{\AbstractEN}{
+% The abstract has an introductory role and should engulf both a brief description of the issue at hand, as well as an overview of the obtained results and conclusions. The abstract should be formulated such that even somebody that is unfamiliar with the projects’ domain can grasp the objectives of the thesis while, at the same time, retaining a specificity level offering a bird’s eye view of the project.
+% The projects’ abstract will be elaborated in both Romanian and English. The recommended size for this section is limited to 200 words for each version. Together, both versions will fit in one page.
+}
+
+%%
+%%   Campurile aferente paginii de multumiri
+%%
+\newcommand{\Thanks}{
+% (opțional) Aici puteți introduce o secțiunea specială de mulțumiri / acknowledgments.
+}
+
+\begin{document}
+
+\frontPageRO
+\frontPageEN
+
+\begingroup
+\linespread{1}
+\tableofcontents
+\endgroup
+
+\AbstractPage
+
+% poate fi comentata sau stearsa
+\ThanksPage
+
+
+% Textul licentei incepe de aici
+
+
+
+\chapter{Introducere}\pagestyle{fancy}
+% * <marios.choudary@gmail.com> 2018-02-28T11:38:18.106Z:
+%
+% > INTRODUCERE
+% Am scos de aici referintele la font pentru a nu mai fi dependenti de Calibri. Personal, nici nu sunt sigur ca ajuta prea mult aceasta recomandare si mi se pare bun font-ul default din Latex (Computer Modern). Daca sunteti de-acord, va rog sa stergeti liniile comentate de mai jos, precum si cele referitoare la fontul Calibri din restul documentului.
+%
+% ^.
+% Parametrii de formatare recomandați pentru lucrare:
+% \begin{itemize}
+%  %\item Font recomandat: Calibri; Dimensiune font: 12;
+%  \item Dimensiune font: 12;
+%  \item Spațiere între linii: 1,5; Spațiere după paragraf: 8pt;
+%  \item Stil: Justified;
+%  \item Dimensiune pagină: A4; Margini: 2,54cm/ 2,54cm/ 2,54cm/ 2,54cm;
+%  %\item Heading1: Calibri, 14, bold, all caps;
+%  %\item Heading2: Calibri, 14, bold;
+%  %\item Heading3: Calibri, 12.
+%  %\item Font pentru formule: Cambria Math, 12.
+%  \item Heading1: 14, bold, all caps;
+%  \item Heading2: 14, bold;
+%  \item Heading3: 12.
+%  \item Font size pentru formule: 12.
+% \end{itemize}
+% În cadrul introducerii, este necesară abordarea următoarelor puncte care reprezintă de fapt familiarizarea cititorului (comisia, alți colegi sau experți în domeniu) cu tema proiectului, soluția propusa și cuprinsul/structura lucrării. Deși introducerea poate conține și unele elemente mai generale, se recomandă păstrarea unui limbaj tehnic, specific audienței care va citi lucrarea.
+
+% În cadrul capitolelor următoare, veți regăsi o serie notații de forma \dezvoltare, \cercetare. Acest tip de formatare este utilizat exclusiv în acest template pentru a marca sfaturi și cerințe specifice pentru lucrări de diploma cu specific diferit. În pregătirea documentului vostru, nu veți utiliza aceste marcaje.
+% Elementele pe care trebuie să le abordați în introducere sunt descrise în cadrul subcapitolelor de mai jos.
+
+În societatea de astăzi, roboții joacă un rol din ce în ce mai important. Domeniile în care aceștia sunt utilizați sunt vaste. Există roboți utilizați în industrie, în casele noastre, pentru a reproduce capabilitațile umane, pentru a fi lansați în spațiu sau care au ca rol interacțiunea cu omul. Scopul roboților este de a reduce dependența umană în ceea ce privește îndeplinirea unei sarcini de lucru.
+
+Cea mai recentă predicție din partea Federației Internaționale de Robotică (IFR) din data de 11 octombrie 2017 atestă că vânzarea de roboți pentru uz profesional o să crească cu 12\% până la sfârșitul anului 2017 ajungând la un nou record de 5,2 miliarde de dolari, iar prognoza pe termen lung este de asemenea pozitivă, cu o rată medie de creștere de 20-25\% în perioada 2018 - 2020. Deasemenea, piața pentru roboții de uz personal care îi ajută pe oameni în viața lor de zi cu zi progresează rapid. Se preconizează că vânzările de roboți pentru sarcini interne (de exemplu: aspiratoare robot, robot de tuns iarba, de spălat podele, de curățare a geamurilor sau a piscinei) ar putea atinge o valoare estimată de aproximativ 11 miliarde de dolari in perioada 2018-2020.
+În Figura \ref{fig:grafic_vanzari} se poate observa creșterea preconizată în perioada 2018-2020 pentru roboții de uz casnic, masurată în milioane de unități.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.33]{pics/grafic_vanzari.png}
+  \caption{Vânzări roboți pentru uz casnic. Prognoză 2018 - 2020\protect\footnotemark}
+  \label{fig:grafic_vanzari}
+\end{figure}
+\footnotetext{©
+\url{https://ifr.org/downloads/press/Executive_Summary_WR_Service_Robots_2017_1.pdf}}
+% \begin{tikzpicture}
+%     \begin{axis}[
+%       /pgf/number format/.cd,
+%         use comma,
+%         1000 sep={},
+%             ybar,
+%             symbolic x coords={0--2,2--5,5--10,10--20,20--50,50+},
+%             xtick=data,
+%         ]
+%         \addplot table[x=interval,y=carT]{\mydata};
+%     \end{axis}
+% \end{tikzpicture}
+
+% Bar graph - GOOD
+% \pgfplotstableread[row sep=\\,col sep=&]{
+%     an & unitati \\
+%     2015     & 3.7 \\
+%     2016     & 4.7 \\
+%     2017    & 6.1 \\
+%     2020   & 32.4 \\
+%     }\mydata
+% \begin{center}
+% \begin{tikzpicture}
+%     \begin{axis}[
+%       /pgf/number format/.cd,
+%         use comma,
+%         1000 sep={},
+%         nodes near coords,
+%             ybar,
+% 						ylabel=Milioane de unități,
+% 						xlabel = An vânzări roboți de uz casnic ={2015,2016,2017,2018/2020},
+%             xtick=data,
+%         ]
+%         \addplot table[x=an,y=unitati]{\mydata};
+%     \end{axis}
+% \end{tikzpicture}
+% \end{center}
+
+% \begin{tikzpicture}
+% \begin{axis}[
+% 	x tick label style={
+% 		/pgf/number format/1000 sep=},
+% 	ylabel=Milioane de unități,
+% 	enlargelimits=0.05,
+% 	legend style={at={(0.5,-0.1)},
+% 	anchor=north,legend columns=-1},
+% 	ybar interval=0.7,
+% ]
+% \addplot
+% 	coordinates {(2015,3.7) (2016,4.7)
+% 		 (2017,6.1) (2018-2020,32.4)};
+% \addplot
+% 	coordinates {(2012,388950) (2011,393007)
+% 		(2010,398449) (2009,395972)};
+% \legend{An vânzări roboți de uz casnic}
+% \end{axis}
+% \end{tikzpicture}
+
+% \begin{bchart}[,max=32.4]
+% 	\bcbar[text = 2015]{3.7}
+% 	\smallskip
+% 	\bcbar[text = 2016]{4.7}
+% 	\medskip
+% 	\bcbar[text = 2017]{6.1}
+% 	\bigskip
+% 	\bcbar[text = 2018-2020]{32.4}
+% \end{bchart}
+
+% \section{Context}
+% O scurtă introducere a proiectului, motivație, explicație de ce este relevant domeniul proiectului.
+
+\section{Problema}
+Majoritatea caselor moderne sunt prevăzute cu grădină interioară, iar iarba trebuie să fie menținută la un nivel redus pentru ca utilizatorii să se bucure de un gazon sănătos. Această activitate poate reprezenta o problemă deoarece a cosi gazonul în modul tradițional, de mână, necesită mult timp și poate fi periculos. Chiar și utilizarea unei mașini manuale de tuns iarba prezintă dezavantajul dependenței umane și consumului de timp.
+
+Soluția este folosirea unei mașini de tuns iarba automate special proiectată pentru a îndeplini această sarcină care poate de asemenea acționa ca un ajutor pentru proprietarii de case care nu mai pot îndeplini sarcini fizice exigente, cum ar fi persoanele în varsta sau persoanele cu handicap. Mulți bătrâni se bucură de întreținerea gazonului, dar nu mai pot simți satisfacția de a-și menține gazonul datorită cerințelor fizice ale echipamentului de cosit.
+
+
+\section{Obiective}
+Proiectul își propune dezvoltarea unui robot autonom de tuns iarba special proiectat pentru o înălțime mică de tăiere (între 2 și 6 centimetri) și care își dorește să îndeplinească o serie de funcționalități precum:
+\begin{itemize}
+	\item evitarea obstacolelor întâlnite în direcția de mers
+	\item recunoașterea spațiului de lucru și generarea traiectoriei în cadrul unui perimetru delimitat
+    \item oprirea automată a sistemului în cazul în care robotul se răstoarnă sau este ridicat (având o înclinație care ar putea prezenta un pericol datorită lamei de tăiat)
+    % \item oprirea sistemului și notificarea sonoră a utilizatorului în cazul în care roțile sau lama de tăiat rămân blocate
+\end{itemize}
+
+
+
+\section{Soluția propusă}
+% Descrierea pe scurt a soluției implementate; ce abordare este propusă (nu detalierea utilitarelor și a tehnologiilor, ci abordarea și ideea propusă de către autor).
+
+Pentru a oferi autonomie robotului de tuns iarba, acesta trebuie să fie capabil să decidă singur în ce zonă din grădină va trebui să tundă gazonul și unde nu îi este permis accesul. Îndeplinirea acestei cerințe presupune utilizarea unui fir de frontieră care va fi instalat de către utilizator o singură dată și care va delimita spațiul de lucru al robotului, urmând ca robotul să nu acționeze înafara perimetrului stabilit.
+
+% Descriere pe scurt a rezultatelor obținute, eventual de ce acestea sunt importante față de alte soluții sau studii.
+\section{Structura lucrării}
+% Un paragraf în care fiecare dintre secțiunile următoare este prezentată în 1-2 fraze, punând accentul pe elementele cele mai semnificative din fiecare secțiune.
+
+
+
+% \chapter{Analiza Cerințelor / Motivație}
+% \dezvoltare Acest capitol va analiza cerințele produsului din prisma potențialilor clienți și a scenariilor de utilizare preconizate, urmând a fi generată o lista de funcționalități.
+
+% \cercetare Acest capitol va introduce motivația realizării proiectului propus.
+
+% Dacă proiectul de licență face parte dintr-un proiect mai amplu (de exemplu un proiect complex, la care lucrează 2 studenți (ex: 1 student la front-end-ul aplicației, 1 student la back-end-ul aplicației), în acest capitol va fi explicat pe scurt ansamblul proiectului și ce parte din proiect este adresată de lucrarea propusă.
+
+% Criterii pentru calificativul \textit{Ne\textit{Satisfăcător}}:
+% \begin{itemize}
+% 	\item \dezvoltare Cerințele sunt imaginate de student pe baza unei analize a pieței;
+% 	\item \cercetare Nu se oferă o motivație valida.
+% \end{itemize}
+
+% Criterii pentru calificativul \textit{Satisfăcător}:
+% \begin{itemize}
+% 	\item \dezvoltare Există un interviu, un client, analiza cerințelor este elaborată pe baza interviului;
+% 	\item \cercetare Motivația este doar personala.
+% \end{itemize}
+
+
+% Criterii pentru calificativul \textit{Bine}:
+% \begin{itemize}
+% 	\item	 \dezvoltare Proces iterativ pe baza unor interviuri cu mai mulți clienți, dezvoltare MVP, reevaluare cerințe;
+% 	\item	 \cercetare Motivația este legata de o necesitate științifica / tehnica explicită.
+% \end{itemize}
+
+
+\chapter{Studiu de Piață}
+% \chapter{Studiu de Piață / Metode Existente}
+% \dezvoltare Ce soluții similare există pe piață? Care sunt limitările lor / pentru ce cazuri de utilizare sau pentru ce tip de clienți produsele existente pe piață nu răspund cerințelor? Care sunt indicatorii pe baza cărora sunt evaluate aceste produse, de către potențiali clienți, și unde sunt lipsurile/ care este oportunitatea generată de lipsurile acestea?
+
+% \cercetare Metode existente (sau ``State of the Art'') se referă, de regulă, la nivelul curent de dezvoltare: care este starea curentă a domeniului, unde ne găsim, care este contextul. Care sunt soluțiile actuale prezente în literatura de specialitate și care sunt limitările lor? Ce direcții de explorare sunt recomandate în literatura de specialitate? Literatura de specialitate se refera la articole științifice recente, publicate în reviste cu factor de impact mare, sau în volumele unor conferințe de top, sau în cărți.
+În acest capitol este prezentat un studiu raportat la modelele de mașini de tuns iarba autonome existente pe piață la momentul actual și se vor evidenția specificațiile acestora.
+
+Printre modelele de mașini de tuns iarba autonome încadrate în Top 10 2018 se înnumără ROBOMOW RS635, Husqvarna Automower 450X, BOSCH INDEGO 400 CONNECT, prezente în Figura \ref{fig:modele}.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.15]{pics/modele_2018.jpg}
+  \caption{Modele de mașini de tuns iarba prezente în Top 10 în anul 2018}
+  \label{fig:modele}
+\end{figure}
+
+Toate aceste modele se bazează pe același principiu de funcționare în care există un fir de frontieră instalat de către utilizator, respectându-se o serie de reguli pentru a se realiza o instalare corectă care va permite mașinii de tuns iarba să detecteze corespunzător perimetrul delimitat. Aceste reguli sunt prezentate pentru fiecare model în manualul de utilizare și un exemplu este ilustrat în Figura \ref{fig:fir_frontiera}.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.3]{pics/fir_frontiera.png}
+  \caption{Exemplu de instalare fir de frontieră pentru modelul Husqvarna Automower 450X\footnotemark}
+  \label{fig:fir_frontiera}
+\end{figure}
+
+Aceste modele de mașini de tuns iarba își creează un model de mișcare neregulat și este determinat de mașina de tuns în mod aleator sau semi-aleator identificat ca model principal (Figura \ref{fig:trajectory-random}).
+
+Modelul ROBOMOW RS635 are doar modul principal integrat, traiectoria acestuia fiind generată aleator. Modelul BOSCH INDEGO 400 CONNECT are pe lângă modul principal și un mod în care traiectoria de tuns iarba generează un model linie cu linie.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.5]{pics/husqvarna_trajectory.jpg}
+  \caption{Traiectorie generată aleator de către Husqvarna Automower 450X\footnotemark[\value{footnote}}
+  \label{fig:trajectory-random}
+\end{figure}
+
+Modelul Husqvarna Automower 450X are mai multe moduri: cel principal aleator, în spirală (Figura \ref{fig:trajectory-spiral}), dar și un mod în care mașina de tuns își creează automat un traseu în funcție de zonele din grădină care nu au fost acoperite. Ultimul mod este realizat prin integrarea unui modul de GPS, și astfel, în timp ce mașina tunde iarba, este stocată în memorie o hartă a grădinii în care se reține și poziția firului de frontieră. Pe măsură ce iarba este tunsă, harta se  actualizează, iar cu ajutorul unui sistem de navigare, mașina de tuns se poate deplasa dintr-un punct în altul pentru a se asigura un procent cât mai mare de acoperire a grădinii.
+
+După cum se poate observa în Tabela \ref{tab:comparatie}, doar modelul Husqvarna Automower 450X dispune de navigare asistată de GPS, de unde rezultă și prețul ridicat.
+
+Față de modelul BOSCH INDEGO 400 CONNECT, modelele Husqvarna Automower 450X și ROBOMOW RS635 au dimensiunea, greutatea, capacitatea bateriilor și aria maximă de acoperire mai mare. Astfel se justifică prețul de aproape trei ori mai mare față de modelul BOSCH INDEGO 400 CONNECT.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.236]{pics/husqvarna_spiral.jpg}
+  \caption{Traiectorie în spirală - Husqvarna Automower 450X\footnotemark[\value{footnote}}
+  \label{fig:trajectory-spiral}
+\end{figure}
+\footnotetext{\url{https://www.myrobotcenter.eu/en/downloads/dl/file/id/952/husqvarna_automower_420_430x_450x_manual.pdf}}
+
+\begin{table}[th]\small\linespread{1}
+	\centering
+\caption{Specificații ROBOMOW RS636, HUSQVARNA 450X, BOSCH INDEGO 400 CONNECT}
+\label{tab:comparatie}
+\begin{tabular}{||c c c c||}
+\hline
+\textbf{Specificație} & \textbf{ROBOMOW RS636} & \textbf{HUSQVARNA 450X} & \textbf{BOSCH 400} \\\hline
+Arie maximă & 3500m$^2$ & 5000m$^2$ & 400m$^2$\\\hline\hline
+Motor lamă de tăiat & DC Brushless & DC Brushless & DC Brushless\\\hline
+Consum & 33 kWh(pe lună) & 35W(tundere) & 400W\\\hline
+Tip baterie & Litiu 26V & Li-ion 18V & Li-ion 18V\\\hline
+Capacitate baterie & 6Ah & 10.4Ah & 2.5Ah\\\hline
+Timp de tuns & 80-100min & 290min & 30min\\\hline
+Timp de încărcare & 90-110min & 75min & 45min\\\hline
+Înălțime de tuns & 20-80mm & 20-60mm & 30–50mm\\\hline
+Lungime de tăiere & 56cm & 24cm & 19cm \\\hline
+Număr lame & 2 & 3 & 3 \\\hline
+Dimensiuni robot & 73.5x66x31cm & 72x56x31cm & 44.5x36.4x20.2cm\\\hline
+Greutate robot & 20.2kg & 13.9kg & 8kg\\\hline
+Înclinație plan & \ang{20} &  \ang{24} & \ang{15}\\\hline
+PIN  & da & da & da \\\hline
+Alarmă  & da & da & da\\\hline
+Senzor de ploaie & da & da & nu\\\hline
+Fir de frontieră & da & da & da\\\hline
+% Lungime maximă fir &  & 400m \\\hline
+Navigare GPS & nu & da & nu\\\hline
+GSM inclus & da & nu & nu\\\hline
+Aplicație mobilă & da & da & da\\\hline
+Preț & 2665€ & 3016€ & 1099€\\\hline
+\end{tabular}
+\end{table}
+% \ambele În încheierea acestui capitol se dorește descrierea tehnologiilor folosite în lucrare, cu alternative și cu argumente convingătoare calitative și cantitative.
+
+% Criterii pentru calificativul \textit{Ne\textit{Satisfăcător}}:
+% \begin{itemize}
+% 	\item \dezvoltare Sunt analizate superficial câteva produse de pe piață;
+% 	\item \cercetare analiza literaturii limitata la grupuri de cercetare din România;
+% 	\item \ambele Sunt descrise tehnologiile folosite în lucrare.
+% \end{itemize}
+
+% Criterii pentru calificativul \textit{Satisfăcător}:
+% \begin{itemize}
+% 	\item \dezvoltare Există un interviu, un client, analiza cerințelor este elaborată pe baza interviului.
+% 	\item \cercetare analiza literaturii de specialitate din lume, fără poziționarea precisă a lucrării în peisajului domeniului studiat;
+% 	\item \ambele Sunt descrise câteva tehnologii alternative pentru fiecare din tehnologiile folosite în lucrare. Există o argumentare referitoare la alegere.
+% \end{itemize}
+
+% Criterii pentru calificativul \textit{Bine}:
+% \begin{itemize}
+% 	\item \dezvoltare Proces iterativ pe baza unor interviuri cu mai mulți clienți, dezvoltare MVP, reevaluare cerințe;
+% 	\item \cercetare analiza literaturii de specialitate din lume, cu poziționarea precisă a lucrării în peisajul actual al domeniului studiat;
+% 	\item \ambele Sunt descrise tehnologii alternative. Sunt analizate cantitativ și calitativ, folosite benchmarkuri și teste efectuate de student. Analiza este rezumată prin tabele și grafice.
+% \end{itemize}
+
+% \section{Indicații formatare figuri}
+
+% Figurile utilizate în document vor fi centrate și numerotate (de exemplu Figura~\ref{fig:pic1}).
+% Orice figură ce nu este realizată de către autorul lucrării va fi în mod obligatoriu citată fie la final (de exemplu Figura ~\ref{fig:pic2} este preluată din documentul \cite{}), fie cel puțin într-o notă de subsol (a se vedea Figura~\ref{fig:pic2}). Orice figură ce depășește ca dimensiune 50\% dintr-o pagină, va fi mutată la anexe. Toate figurile din cadrul tezei vor fi referite în text. Exemplu: Figura~\ref{fig:pic1} prezintă o schemă de principiu pentru un amplificator inversor cu AO.
+
+% \begin{figure}[th]
+% \centering
+% \includegraphics{pics/Pic1.png}
+%   \caption{Amplificator inversor}
+%   \label{fig:pic1}
+% \end{figure}
+
+% \newpage
+
+% \begin{figure}[th]
+% \centering
+% \includegraphics{pics/Pic2.png}
+%   \caption[Amplificator de instrumentație cu 3 AO-uri]{Amplificator de instrumentație cu 3 AO-uri\protect\footnotemark}
+%   \label{fig:pic2}
+% \end{figure}
+% \footnotetext{© http://www.ece.tamu.edu/sspalermo/ecen3205/Secton\%201III.pdf}
+
+% \chapter{Soluția Propusă}
+% Capitolul conține o privire de ansamblu a soluției ce rezolvă problema, prin prezentarea structurii / arhitecturii acesteia. În funcție de tipul lucrării acest capitol poate conține diagrame (clase, distribuție, workflow, entitate-relație), demonstrații de corectitudine pentru algoritmii propuși de autor, abordări teoretice (modelare matematică), structura hardware, arhitectura aplicației.
+
+
+% Criterii pentru calificativul \textit{Ne\textit{Satisfăcător}}:
+% \begin{itemize}
+% 	\item	Descriere în limbaj natural.
+% \end{itemize}
+
+% Criterii pentru calificativul \textit{Satisfăcător}:
+% \begin{itemize}
+% 	\item	Descriere + diagrame de baze de date, workflow, clase, algoritmi.
+% \end{itemize}
+
+% Criterii pentru calificativul \textit{Bine}:
+% \begin{itemize}
+% 	\item 	Descriere + diagrame de baze de date, workflow, clase, algoritmi + descrierea unui proces prin care s-a realizat arhitectura/structura soluției.
+% \end{itemize}
+
+% \section{Indicații formatare formule}
+% Formulele matematice utilizate în document vor fi centrate în pagină și numerotate.
+
+% \begin{equation}
+% (x+a)^n = \sum_{k=0}^{n}\left(\begin{array}{c}n\\k\\\end{array}\right)x^ka^{n-k}
+% \end{equation}
+
+% \begin{equation}
+% f(x) = a_0 + \sum_{n=1}^{\infty}\left(a_n \cos\frac{n\pi x}{L} + b_n\sin\frac{n\pi x}{L}\right)
+% \end{equation}
+
+
+
+\chapter{Caracteristici tehnico-funcționale ale componentelor hardware}
+% În plus fata de capitolul precedent acesta conține elemente specifice ale rezolvării problemei care au presupus dificultăți deosebite din punct de vedere tehnic. Pot fi incluse configurații, secvențe de cod, pseudo-cod, implementări ale unor algoritmi, analize ale unor date, scripturi de testare. De asemenea, poate fi detaliat modul în care au fost utilizate tehnologiile introduse in capitolul 3.
+
+
+% Criterii pentru calificativul \textit{Ne\textit{Satisfăcător}}:
+% \begin{itemize}
+% 	\item	Sunt prezentate pe scurt scheme și pseudo-cod.
+% \end{itemize}
+% Criterii pentru calificativul \textit{Satisfăcător}:
+% \begin{itemize}
+% 	\item	Descriere sumara a implementării, prezentarea unor secvențe nerelevante de cod, scheme, etc.
+% \end{itemize}
+% Criterii pentru calificativul \textit{Bine}:
+% \begin{itemize}
+% 	\item	Descrierea detaliată a algoritmilor/structurilor utilizați; Prezentarea etapizată a dezvoltării, inclusiv cu dificultăți de implementare întâmpinate, soluții descoperite; (dacă este cazul) demonstrarea corectitudinii algoritmilor utilizați.
+% \end{itemize}
+
+% \section{Indicații formatare tabele}
+% Se recomandă utilizarea tabelelor de forma celui de mai jos.  Font size :  9.
+% Orice tabel prezent în teză va fi referit în text; exemplu: a se vedea Tabel~\ref{tab:criterii}.
+
+% \begin{table}[th]\small\linespread{1}
+% \caption{Sumarizare criterii}
+% \label{tab:criterii}
+% \begin{tabular}{l >{\raggedright\arraybackslash}p{8cm} >{\raggedright\arraybackslash}p{4cm}}
+% \textbf{Calificativ} & \textbf{Criteriu} & \textbf{Observații} \\\hline
+% \textbf{Nesatisfacator} & Sunt prezentate pe scurt scheme și pseudo-cod & \\\hline
+% \textbf{Satisfacator} &Descriere sumara a implementării, prezentarea unor secvențe nerelevante de cod, scheme, etc.& \\
+% \hline
+% \textbf{\textit{Bine}} &Descrierea detaliată a algoritmilor/structurilor utilizați; Prezentarea etapizată a dezvoltării, inclusiv cu dificultăți de implementare întâmpinate, soluții descoperite; (dacă este cazul) demonstrarea corectitudinii algoritmilor utilizați. & Pot fi incluse configurații, secvente de cod, pseudo-cod, implementări ale unor algoritmi, analize ale unor date, scripturi de testare. \\
+% \hline
+% \end{tabular}
+% \end{table}
+\section{Motoare de acționare roți}
+Una dintre cele mai importante decizii în construirea unui robot este alegerea motoarelor de acționare. Se pornește de la o idee de bază a modelului robotului cu ajutorul căreia se vor calcula cerințele motoarelor, urmând să fie selectate motoarele cu specificațiile care îndeplinesc cel mai bine cerințele definite.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.5]{pics/robot_forte.png}
+  \caption{Forțele care acționează asupra robotului pe un plan înclinat}
+  \label{fig:robot_forte}
+\end{figure}
+
+Considerăm o reprezentare simplă a unui robot cu două roți de acționare și două roți ajutătoare, de masă $m$ și accelerație $a$, aflat pe un plan cu un unghi de înclinare $\theta$ ca în Figura \ref{fig:robot_forte}.
+
+Forța care acționează asupra robotului mobil reprezintă produsul dintre masă și accelerație:
+\begin{equation}
+F = ma
+\end{equation}
+Forța care atrage robotul spre centrul Pământului datorită gravitației:
+\begin{equation}
+G = mg
+\end{equation}
+Componenta tangențială a greutății corpului trage robotul în jos pe pantă și trebuie să fie depășită de motoarele de acționare. Cu cât unghiul de înclinare este mai mare, cu atât va fi mai mare această forță, iar înclinarea unui robot care încearcă să urce face o diferență semnificativă în cuplul necesar motoarelor de acționare.
+\begin{equation}
+F_T = mgsin\theta
+\end{equation}
+Componenta normală a greutății corpului ține robotul pe pantă. Această forță este necesară împreună cu forța de frecare pentru a permite roților motoare să împingă robotul în față.
+\begin{equation}
+F_N = mgcos\theta
+\end{equation}
+Forța de frecare se va ignora deoarece reprezintă ceea ce roțile motoare au nevoie pentru a împinge robotul înainte.
+În Figura \ref{fig:robot_forte}, cuplul este forța de la marginea roților motoare care împing robotul înainte.
+
+Cuplul T reprezintă măsurarea forței aplicate pentru a roti un corp în jurul unei anumite axe. În cazul unui robot mobil, corpul va fi roata, iar axa va fi motorul care acționează asupra roții.
+\begin{equation}
+Cuplul = Forta	x	Distanta
+\end{equation}
+\begin{equation}
+T = F_wr
+\end{equation}
+unde $F_w$ reprezintă forța care împinge robotul înainte.
+
+Roțile motoare ale robotului (Figura \ref{fig:roti_offroad}) sunt concepute pentru teren accidentat și au un diametru de 11 cm, ceea ce înseamnă că forța este aplicată la o distanță egală cu raza $r$ de 0.55m față de motorul de acționare. Datele considerate de referință sunt prezentate în Tabela \ref{tab:date_referinta}.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.5]{pics/roti_offroad.jpg}
+  \caption{Roată motoare a robotului destinată terenului accidentat}
+  \label{fig:roti_offroad}
+\end{figure}
+
+% Datele considerate de referință sunt următoarele:
+% \begin{itemize}
+% 	\item Masa robotului($m$): $6 kg$.
+% 	\item Viteza($v$): $0.5 m/s$
+%   	\item Accelerația($a$): $5 m/s^2$
+%     \item Unghiul de înclinare($\theta$): $20 grade$
+%     \item Raza roților motoare($r$): $0.055 m$
+% \end{itemize}
+
+\begin{table}[th]\small\linespread{1}
+	\centering
+\caption{Datele considerate de referință}
+\label{tab:date_referinta}
+\begin{tabular}{||c c||}
+\hline
+\textbf{Specificație} & \textbf{Valoare} \\\hline\hline
+Masa robotului & 6kg \\\hline
+Viteza & 0.5m/s \\\hline
+Accelerația & 5m/$s^2$ \\\hline
+Unghiul de înclinare(\theta) & \ang{20} \\\hline
+Raza roților motoare(r) & 0.055m \\\hline
+\end{tabular}
+\end{table}
+
+Presupunem că robotul va porni din starea de repaus și va trebui să accelereze până la viteză maximă pe planul înclinat.
+
+La echilibru dinamic, robotul continuă să se deplaseze cu viteză constantă, iar toate forțele ce acționează asupra unui obiect se anulează reciproc.
+\begin{equation}
+\sum{F} = 0
+\end{equation}
+\begin{equation}
+\sum{F} = f_{total} = F_w - F_T = 0
+\end{equation}
+Se consideră situația în care robotul accelerează din starea de repaus la viteză maximă pentru a avea siguranța că motoarele de acționare sunt suficient de puternice. Cuplul necesar pentru a pune robotul în mișcare poate fi mult mai mare decât pentru menținerea acestuia în mișcare. În acest caz, suma forțelor care acționează asupra robotului va fi egală cu masa totală înmulțită cu accelerația.
+\begin{equation}
+\sum{F} = f_{total} = F_w - F_T = ma
+\end{equation}
+\begin{equation}
+F_w = ma + F_T
+\end{equation}
+\begin{equation}
+T/r = ma + mgsin\theta
+\end{equation}
+\begin{equation}
+T = m(a + gsin\theta)r
+\end{equation}
+\begin{equation}
+T = 6(5 \frac{m}{s^2} + 9.8\frac{m}{s^2}sin(20))0.055m
+\end{equation}
+\begin{equation}
+T = 2.756 Nm
+\end{equation}
+Acesta este cuplul total necesar pentru a pune în mișcare robotul. Deoarece se folosesc două motoare de acționare, se împarte cuplul calculat în jumătate pentru a afla cuplul necesar fiecărui motor în parte.
+\begin{equation}
+T_{motor} = 1.378 Nm
+\end{equation}
+Pentru a afla cât de repede trebuie să se rotească motorul, aflăm viteza unghiulară:
+\begin{equation}
+v = wr
+\end{equation}
+\begin{equation}
+w = \frac{v}{r} = \frac{0.5 \frac{m}{s^2}}{0.055 m} = 9.09 \frac{rad}{s} = 86.8 rpm
+\end{equation}
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.35]{pics/motor_cu_suport.jpg}
+  \caption{Motorul de curent continuu împreună cu suportul metalic}
+  \label{fig:motor_cu_suport}
+\end{figure}
+
+Luând în considerare valorile calculate pentru cuplu și viteză unghiulară, specificațiile motoarelor de curent continuu alese, care îndeplinesc cerințele prezentate mai sus, sunt prezente în Tabela \ref{tab:specs_motoare_calc}.
+% \begin{itemize}
+% 	\item Cuplu: $1,373 Nm$.
+% 	\item Viteză unghiulară: $150 rpm$
+%   \item Tensiune de alimentare: $3-12 V$
+%   \item Curent: $300 mA$ (fără sarcină)/ $5A$ (blocat)
+% \end{itemize}
+
+\begin{table}[th]\small\linespread{1}
+		\centering
+\caption{Specificațiile motoarelor de curent continuu alese}
+\label{tab:specs_motoare_calc}
+\begin{tabular}{||c c||}
+\hline
+\textbf{Specificație} & \textbf{Valoare} \\\hline\hline
+Cuplu & 1,373Nm  \\\hline
+Viteză unghiulară &150rpm \\\hline
+Tensiune de alimentare &3-12V \\\hline
+Curent &300mA (fără sarcină)/ 5A (blocat) \\\hline
+\end{tabular}
+\end{table}
+
+
+Se observă faptul că în specificațiile motorului viteza unghiulară este mai mare decât cea calculată și că avem un cuplu egal cu cel calculat, ceea ce dovedește că motorul ales se încadrează în cerințele impuse.
+
+Driver-ul de motoare dual, ilustrat în Figura \ref{fig:driver_motor_dual}, a fost ales în conformitate cu specificațiile motoarelor de curent continuu, mai exact în funcție de curentul consumat de acestea. Specificațiile se regăsesc în Tabela \ref{tab:specs_driver_motor_dual}.
+\begin{table}[th]\small\linespread{1}
+		\centering
+\caption{Specificațiile driver-ului de motoare dual VNH2SP30}
+\label{tab:specs_driver_motor_dual}
+\begin{tabular}{||c c||}
+  \hline
+\textbf{Specificație} & \textbf{Valoare} \\\hline\hline
+Tensiune maximă de alimentare &16V \\\hline
+Tensiune minimă alimentare &5.5V \\\hline
+Curent maxim/canal &14A \\\hline
+Curent maxim/canal pe spike &30A \\\hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.7]{pics/driver_motor_dual.jpg}
+  \caption{Driver de motoare dual VNH2SP30}
+  \label{fig:driver_motor_dual}
+\end{figure}
+
+\section{Motor de acționare lamă de tăiat}
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.4]{pics/motor_lama_1.jpg}
+  \caption{Motor fără perii HobbyKing Donkey ST3511-810kv și circuitul electronic de control}
+  \label{fig:motor_lama}
+\end{figure}
+Lama de tăiat este acționată de către un motor de curent continuu fără perii. Viteza și direcția motorului este controlată de către un circuit electronic (ESC). Atât motorul, cât și circuitul electronic de control al acestuia sunt prezente în Figura \ref{fig:motor_lama}.
+
+Specificațiile motorului fără perii sunt afișate în Tabela \ref{tab:specs_motor_brushless}.
+% \begin{itemize}
+% 	\item RPM/v: $810kv$.
+% 	\item Tensiune: $6V$ ~ $18V$ (2 ~ 4s lipo)
+%   \item Curent (fără sarcină): $2A$
+%   \item Curent maxim: $35A$
+% 	\item Putere maximă: $360W$
+% \end{itemize}
+
+\begin{table}[th]\small\linespread{1}
+		\centering
+\caption{Specificații motor fără perii}
+\label{tab:specs_motor_brushless}
+\begin{tabular}{||c c||}
+  \hline
+\textbf{Specificație} & \textbf{Valoare} \\\hline\hline
+RPM/v & 810kv \\\hline
+Tensiune &6V - 18V (2 - 4s lipo) \\\hline
+Curent (fără sarcină) &2A \\\hline
+Curent maxim &35A \\\hline
+Putere maximă &360W \\\hline
+Greutate &357g \\\hline
+\end{tabular}
+\end{table}
+
+TO DO poza lama de taiat
+\section{Alimentare robot}
+
+Alimentarea robotului este realizată cu ajutorul a două baterii Li-Po nano-tech Turningy cu 3 celule (11.1 V), prezente în Figura \ref{fig:baterie_lipo}. Pentru a gestiona mai bine energia, o baterie alimentează placa de dezvoltare și motoarele ce acționează roțile printr-o conexiune în paralel, iar cealaltă baterie alimentează motorul ce acționează lama, după cum se poate observa în Figura \ref{fig:diagrama_alimentare}.
+
+Selecția bateriilor a fost realizată sub anumite constrângeri: oferirea unei autonomii pentru //TO DO un anumit timp, greutatea să fie cât mai mică pentru a permite menținerea greutății totale a robotului în plaja 5-6 kg în forma finală, dimensiunile să permită integrarea acestora fără probleme în spațiul de pe robot destinat poziționării tuturor componentelor. Specificațiile bateriilor sunt enumerate în Tabela \ref{tab:specs_baterii}.
+
+% \begin{itemize}
+% 	\item Capacitate: $5000 mAh$
+% 	\item Rată de descărcare: $30C$
+%   \item Rată maximă de încărcare: $8C$
+%   \item Lungime: $135mm$
+% 	\item Lățime: $29mm$
+% 	\item Greutate: $357g$
+% \end{itemize}
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.65]{pics/diagrama_alimentare.png}
+  \caption{Diagramă alimentare}
+  \label{fig:diagrama_alimentare}
+\end{figure}
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.45]{pics/baterie_lipo.jpg}
+  \caption{Baterie Li-Po Nano-tech Turningy cu 3 celule}
+  \label{fig:baterie_lipo}
+\end{figure}
+\begin{table}[th]\small\linespread{1}
+		\centering
+\caption{Specificații baterii Li-Po}
+\label{tab:specs_baterii}
+\begin{tabular}{||c c||}
+  \hline
+\textbf{Specificație} & \textbf{Valoare} \\\hline\hline
+Capacitate & 5000mAh \\\hline
+Rată de descărcare &30C \\\hline
+Rată maximă de încărcare &8C \\\hline
+Lungime &135mm \\\hline
+Lățime &29mm \\\hline
+Greutate &357g \\\hline
+\end{tabular}
+\end{table}
+\section{Placă de dezvoltare}
+% \begin{figure}[th]
+% \centering
+% \includegraphics[scale=0.1]{pics/arduino_mega.png}
+%   \caption{Placă de dezvoltare Arduino Mega}
+%   \label{fig:arduino_mega}
+% \end{figure}
+Placa de dezvoltare este Arduino Mega 2560, un microcontroler bazat pe ATmega2560. Placa dispune de 54 de intrări/ieșiri digitale (din care 15 pot fi utilizate ca ieșiri PWM), 16 intrări analogice, 4 UART-uri (porturi seriale hardware), memorie flash de 256KB și funcționează la o frecvență de 16 MHz.
+
+Deasemenea, Arduino Mega dispune și de 5 cronometre:
+\begin{itemize}
+	\item Cronometrul 0 controlează pinul 13 și 4;
+	\item Cronometrul 1 controlează pinul 12 și 11;
+	\item Cronometrul 2 controlează pinul 10 și 9;
+	\item Cronometrul 3 controlează pinul 5, 3 și 2;
+	\item Cronometrul 4 controlează pinul 8, 7 și 6;
+\end{itemize}
+% https://www.sparkpcb.com/development/boards/arduino/arduino-mega-2560-with-usb-cable.html
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.17]{pics/arduino_mega.jpg}
+  \caption{Placa de dezvoltare Arduino Mega\protect\footnotemark}
+  \label{fig:arduino_mega}
+\end{figure}
+\footnotetext{\url{https://www.sparkpcb.com/development/boards/arduino/arduino-mega-2560-with-usb-cable.html}}
+
+\section{Proiectare carcasă}
+Baza robotului este realizată dintr-un material necasant de 10mm grosime, iar schița vectorială este prezentată în Figura \ref{fig:baza_robot}. Materialul este perforat pentru a permite prinderea roților conducătoare și a celor ajutătoare, dar și a motorului fără perii care acționează lama de tăiat din în partea centrală. Prinderea acestor componente este realizată prin intermediul șuruburilor și a piulițelor.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.13]{pics/baza_robot_doc.jpg}
+  \caption{Schiță vectorială a bazei robotului}
+  \label{fig:baza_robot}
+\end{figure}
+
+Carcasa robotului este realizată dintr-un material de 3mm grosime, prevăzut cu un strat de metal, iar schița vectorială este prezentată în Figura \ref{fig:carcasa_robot}. Materialul este perforat pentru a permite plasarea în exterior a senzorilor de distanță, a butoanelor de pornire/oprire și a antenei GPS.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.09]{pics/carcasa.png}
+  \caption{Schiță vectorială a carcasei robotului}
+  \label{fig:carcasa_robot}
+\end{figure}
+
+Carcasa robotului este detașabilă și se prinde de baza acestuia prin intermediul a sașe șuruburi. O formă finală a robotului de tuns iarba este prezentată în Figura \ref{fig:robot_in_iarba}.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.35]{pics/carcasa_robot_iarba.jpg}
+  \caption{Robotul în forma finală}
+  \label{fig:robot_in_iarba}
+\end{figure}
+
+\chapter{Arhitectură software}
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.15]{pics/arhitectura_software.png}
+  \caption{Arhitectură software}
+  \label{fig:arhitectura_software}
+\end{figure}
+
+% TO DO diagrama cu statia fixa
+Controlul motoarelor care acționează roțile conducătoare, dar și al motorului care acționează lama de tăiat se realizează prin modulația impulsului semnalului dreptunghiular în lățime, semnal transmis către pinii PWM ai plăcii de dezvolare. După cum se vede în Figura \ref{fig:pwm}, controlul PWM se rezumă la ajustarea factorului de umplere, iar viteza generată de motoare este proporțională cu acesta.
+Arduino permite un control simplu prin PWM deoarece factorul de umplere reprezintă o valoare între 0 și 255.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.72]{pics/pwm-01.png}
+  \caption{Modulația impulsurilor în lățime (PWM)}
+  \label{fig:pwm}
+\end{figure}
+
+Conform descrierii realizate în secțiunea "Placă de dezvoltare", Arduino Mega dispune de 5 cronometre cu ajutorul cărora sunt configurați cei 15 pini de PWM. Rolul cronometrului este de a înnumăra de la 0 la 255. Semnalul de la ieșirea unui pin PWM are valoarea "1" atunci când pornește cronometrul înnumărătoarea și devine "0" în momentul în care înnumărătoarea este egală cu valoarea factorului de umplere setat. Cronometrele sunt prevăzute cu mai multe canale pentru a permite efectuarea mai multor înnumărători în paralel. Spre exemplu, în Figura \ref{fig:timers} este ilustrat semnalul generat de cronometru și două semnale de ieșire corespunzătoare celor două canale ale cronometrului. Factorul de umplere pentru cele două semnale este stocat în registrul fiecărui canal, iar când semnalul cronometrului ajunge la valoarea indicată de registru se observă schimbarea valorii semnalului de ieșire din "1" în "0", în ambele cazuri.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.43]{pics/timers-01.png}
+  \caption{Principiul de funcționare a cronometrelor}
+  \label{fig:timers}
+\end{figure}
+
+\chapter{Evitarea obstacolelor}
+\section{Principiu de funcționare}
+Una dintre cerințele îndeplinite de robotul de tuns iarba realizat este evitarea obstacolelor care apar în traiectoria de mers. Pentru a îndeplini această cerință, la nivel hardware, robotul este donat cu trei senzori de distanță ultrasonici ilustrați în Figura \ref{fig:senzor_ultrasonic}. Poziționarea acestora în cadrul robotului este realizată în partea frontală, acoperind trei zone de vizibilitate: partea stângă, partea dreaptă și partea corespunzătoare direcției de mers.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.145]{pics/senzor_ultrasonic.jpg}
+  \caption{Senzor ultrasonic HC-SR04}
+  \label{fig:senzor_ultrasonic}
+\end{figure}
+%mod in care se roteste n fucntie de spatiul de desfasurare. TO DO mode complet aleator - stanga dreapta aleator
+În momentul în care robotul sesizează un obstacol care se află la o distanță mai mică sau egală decât distanța de coliziune setată la nivel software și este în aria de vizibilitate a unuia dintre cei trei senzori, se activează procesul de schimbare a direcției. Pentru a schimba direcția, robotul efectuează o serie de pași ilustrați în Figura \ref{fig:evitare_obstacole}. Începe prin a merge înapoi pentru a oferi mai mult spațiu de manevră, evitând astfel o posibilă coliziune în timpul efectuării următorilor pași. În continuare, robotul se oprește pentru câteva milisecunde pentru a decide în ce sens se va roti pentru a schimba direcția. Decizia este luată în funcție de datele citite de la senzorii poziționați în partea stângă și în partea dreaptă. De exemplu, dacă senzorul din partea dreaptă sesizează un obstacol la 20 de cm și senzorul din partea stângă la 50 de cm, robotul se va roti spre stânga. Urmează încă o oprire de câteva milisecunde, după care robotul merge înainte pană la întâlnirea următorului obstacol.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.7]{pics/evitare_obstacole.png}
+  \caption{Pașii urmați în procesul de evitare obstacole}
+  \label{fig:evitare_obstacole}
+\end{figure}
+
+Acești pași sunt îndepliniți și în cazul în care robotul este în vecinătatea firului de frontieră și sesizează prezența acestuia precum în Figura \ref{fig:evitare_fir_de_frontieră}. La nivel software, detectarea prezenței firului de frontieră este interpretată ca un obstacol și se începe același proces de schimbare a direcției cu evitarea coliziunii. Singura diferență în acest caz este faptul că robotul se va roti aleator spre stânga sau dreapta.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.7]{pics/evitare_fir_frontiera.png}
+  \caption{Pașii urmați în procesul de evitare fir de frontieră}
+  \label{fig:evitare_fir_de_frontieră}
+\end{figure}
+\newpage
+\chapter{Delimitarea perimetrului}
+\section{Fir de frontieră}
+
+Localizarea prin prezența unui fir de frontieră este realizată în sensul de poziționare în interiorul sau în exteriorul perimetrului delimitat. Principiul de bază este instalarea unui fir de frontieră care să delimiteze perimetrul în care robotul îsi va desfășura activitatea. Robotul nu va depăși acest perimetru, deoarece atunci când se va afla la marginea perimetrului își va schimba traiectoria corespunzător. Utilizarea unui fir de frontieră presupune prezența unui transmițător și a unui receptor.
+
+\subsection{Transmițător}
+Transmițătorul are rolul de a genera un semnal prin firul de frontieră, iar receptorul amplasat pe robot de a detecta prezența semnalului atunci când robotul este aproape de marginea perimetrului delimitat.
+
+În cadrul transmițătorului, se generează un semnal dreptunghiular de o anumită frecvență cu ajutorul unei plăci de dezvoltare Arduino Uno. Driver-ul de motor generează semnalului dreptunghiular spike-uri (vârfuri ascuțite), iar circuitul rezonant LC amplifică aceste spike-uri în cazul în care frecvența de rezonanță $f_0$ este egală cu frecvența semnalului de intrare. Valorile bobinei și condensatorului se aleg astfel încât să existe această egalitate între cele două frecvențe. În continuarea circuitului se asamblează firul de frontieră confecționat din cupru.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.25]{pics/lc_circuit.png}
+  \caption{Circuit rezonant}
+  \label{fig:lc_circuit}
+\end{figure}
+
+Frecvența de rezonanță $f_0$ a unui circuit rezonant (Figura \ref{fig:lc_circuit}) măsurată în Herți este dată de formula următoare:
+\begin{equation}
+f_0 =  \frac{\omega_0}{2\pi} = \frac{\frac{1}{\sqrt{LC}}}{2\pi} = \frac{1}{2\pi\sqrt{LC}}
+\end{equation}
+unde $\omega_0$ reprezintă frecvența unghiulară.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.3]{pics/schema_transmitator.jpg}
+  \caption{Schemă circuit transmițător TO DO Arduino Uno}
+  \label{fig:schema_transmitator}
+\end{figure}
+%TO DO de ce am ales frecventa 7800
+Frecvența semnalului generat prin firul de frontieră a fost aleasă 7800 Hz. Astfel, valorile testate pentru circuitul LC sunt 3.3uF/50V pentru condensator, respectiv 120uH pentru bobină. Frecvența de rezonanță pentru acest circuit este de 7998 Hz, având o valoare foarte apropiată de frecvența semnalului de intrare.
+
+Schema circuitului transmițătorului este prezentată în Figura \ref{fig:schema_transmitator}.
+
+TO DO inlocuire poza finala transmitator Figura \ref{fig:transmitator_final}.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.08]{pics/transmitator_final.jpg}
+  \caption{Formă finală circuit transmițător}
+  \label{fig:transmitator_final}
+\end{figure}
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.19]{pics/transmitator_iarba.jpg}
+  \caption{Carcasă transmițător}
+  \label{fig:transmitator_final2}
+\end{figure}
+
+Forma semnalului, văzută la osciloscop, în anumite puncte ale circuitului se poate observa în Figura   \ref{fig:semnal_sender}. De remarcat sunt spike-urile generate de drive-ul de motor (în partea stângă) și efectul circuitului rezonant care produce oscilații (în partea dreaptă). Semnalul generat la ieșirea circuitului LC este semnalul transmis prin firul de cupru de 20m.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.2]{pics/driver_LC.jpg}
+  \caption{a) Efectul driver-ului de motor asupra semnalului b) Efectul circuitului rezonant asupra semnalului}
+  \label{fig:semnal_sender}
+\end{figure}
+Pentru o transmisie cât mai adecvată, este necesar să alegem un fir de cupru de grosime și lungime corespunzătoare. Aceste două caracteristici influențează rezistența firului pe baza formulei următoare:
+\begin{equation}
+R_{fir} = \frac{\rho*L}{S}
+\end{equation}
+unde {\rho} reprezintă rezistivitatea firului, L lungimea, iar S suprafața acestuia.
+
+
+Cu cât firul este mai gros, cu atât rezistența acestuia va fi mai mică și va rezulta un curent ce străbate firul de o intensitate mai mare. Din această cauză firul trebuie să fie cât mai subțire, iar în practică s-a folosit un fir cu diametrul de 0.5mm, lungime de 20m și rezistivitate $\rho = 1.68*10^{-8}$, specifică cuprului. Rezistența firului se calculează în felul următor:
+\begin{equation}
+R_{fir} = \frac{\rho*L}{S} = \frac{1.68*10^{-8}\si{\ohm}m*20m}{\pi*0.00025^2 m^2} \approx 1.7\si{\ohm}
+\end{equation}
+
+Intensitatea curentului prin fir, dacă se neglijează celelalte rezintențe, iar tensiunea de alimentare este de 5V este determinată astfel:
+\begin{equation}
+I = \frac{U}{R_{fir}} = \frac{5V}{1.7\si{\ohm}} \approx 3A
+\end{equation}
+
+În cazul unui curent mare, bobina trebuie să aibă un curent de saturație mare, iar bobina selectată are un curent de saturație maxim de 3.1A, ceea ce permite o bună funcționare a circuitului.
+
+Circuitul a fost simulat și în programul LTspice, schema fiind ilustrată în Figura \ref{fig:ltspice_schema}, iar graficul care surprinde forma semnalului la intrare în puntea H și înainte de bobină este ilustrat în Figura \ref{fig:ltspice_grafic}.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.4]{pics/ltspice_schema.png}
+  \caption{Schemă circuit LTspice}
+  \label{fig:ltspice_schema}
+\end{figure}
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.6]{pics/ltspice_grafic.png}
+  \caption{Grafic LTspice}
+  \label{fig:ltspice_grafic}
+\end{figure}
+\subsection{Receptor}
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.7]{pics/receiver_circuit.png}
+  \caption{Schemă circuit receptor}
+  \label{fig:receiver_circuit}
+\end{figure}
+Pentru a recepționa semnalul generat prin firul de frontieră este nevoie de un circuit LC cu aceeasi frecvență de rezonanță precum cea a circuitului de la transmisie. În cadrul receptorului, bobina aleasă este de 82mH, iar condensatorul de 4.7nF/50V. Frecvența de rezonanță rezultată este de 8107Hz, aproximativ egală cu frecvența de rezonanță a circuitului LC de la transmițător de 7998Hz. Pentru a detecta semnalul cât mai bine se folosește un amplificator în continuarea circuitului LC, după cum se poate observa în Figura \ref{fig:receiver_circuit}. Semnalul OUT de la ieșirea din amplificator este conectat la un pin analogic de pe placa de dezvoltare pentru a citi valorile corespunzătoare amplitudinii semnalului recepționat.
+
+Recepția semnalului generat prin firul de frontieră de lungime 20m, de la o distanță $d = 15cm$, respectiv $d = 10cm$ este ilustrată în Figura \ref{fig:receiver_10_15_cm}, recepție observată la osciloscop.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.2]{pics/receiver_10_15_cm.jpg}
+  \caption{a) Semnalul recepționat de la d = 15cm b) Semnalul recepționat de la d = 10cm}
+  \label{fig:receiver_10_15_cm}
+\end{figure}
+
+În cadrul testelor realizate asupra transmițătorului și receptorului descriși mai devreme, se observă faptul că semnalul generat prin firul de cupru începe să fie detectat de la o distanță de aproximativ 40cm, având o amplitudine mică de 2V, iar forma acestuia fiind identificată drept sinusoidală. Amplitudinea semnalului crește în timp ce distanța dintre receptor și fir scade, ajungâng până la 3.6V (aproape de amplitudinea maximă), dar având încă o formă sinusoidală la distanța de 15cm. Forma
+semnalului este detectată dreptunghiulară de la o distanță mai mică sau egală cu 10cm, iar amplitudinea se apropie de valoarea maximă de 3.9V, având valoarea 3.8V.
+Un aspect foarte important cu privire la teste realizate, este faptul că bobina de la recepție este poziționată la 1cm distanță față de pământ. Doar în această situație semnalul este recepționat conform informațiilor și figurilor prezentate.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.35]{pics/grafic_atenuare_semnal.png}
+  \caption{Atenuarea amplitudinii semnalului recepționat în funcție de distanța de recepție}
+  \label{fig:grafic_atenuare_semnal}
+\end{figure}
+
+Rezultatele măsurătorilor privind amplitudinea semnalului recepționat în funcție de distanța de recepție se pot observa în graficul de mai sus.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.07]{pics/fir_40_receiver_15_10_cm.jpg}
+  \caption{a) Semnalul recepționat de la d = 15cm b) Semnalul recepționat de la d = 10cm}
+  \label{fig:fir_40_receiver_15_10_cm}
+\end{figure}
+
+A fost realizată și o măsurătoare în care s-a folosit același fir de cupru, dar având lungimea de 40m. Semnalul recepționat de la o distanță de $d = 15cm$, respectiv $d = 10cm$ este ilustrat în Figura \ref{fig:fir_40_receiver_15_10_cm}, recepție observată la osciloscop.
+
+Atunci când receptorul este poziționat la o distanță de 15 cm de firul de frontieră, amplitudinea semnalului recepționat este 3.4V, iar pentru o distanță de 10 cm, amplitudinea semnalului este 3.7V.
+Rezultatele pentru un fir lung de 20 m, respectiv 40 m, la o recepție realizată la distanța de 15 cm și 10 cm, diferă foarte puțin. Această diferență se poate datora și faptului că măsurătorile au fost efectuate în puncte diferite ale firului de frontieră în cele două cazuri.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.1]{pics/fir_40_receiver_5_cm.jpg}
+  \caption{Semnalul recepționat la d = 5 cm, având amplitudine maximă}
+  \label{fig:fir_40_receiver_5}
+\end{figure}
+
+Comparând amplitudinea maximă a semnalului, în cazul unui fir de lungimea de 20m, aceasta are valoarea de 3.9V, iar în cazul unui fir de lungimea de 40m, aceasta are valoarea 3.82V, recepționată la o distanță de 5cm (Figura \ref{fig:fir_40_receiver_5}). Pe baza măsurătorilor, putem estima o diferență de 0.08V în amplitudinea maximă semnalului, diferență relativ mică în condițiile în care lungimea semnalului a fost dublată.
+
+% \begin{center}
+% \begin{tikzpicture}
+% \begin{axis}[
+%     title={Atenuarea amplitudinii semnalului recepționat în funcție de distanța de recepție},
+%     ylabel={Amplitudinea semnalului},
+%     xlabel={Distanța receptor-fir în cm},
+%     xmin=0, xmax=240,
+%     ymin=0, ymax=4,
+%     ytick={0,0.5,1,1.5,2,2.5,3,3.5,4},
+%     xtick={0,40,80,120,160,200,240},
+%     legend pos=north west,
+%     ymajorgrids=true,
+%     grid style=dashed,
+% ]
+%
+% \addplot[
+%     color=blue,
+%     mark=square,
+%     ]
+%     coordinates {
+%     (5,3.9)(10,3.9)(15,3.7)(20,3.1)(30,2.6)(40,2.2)(50,1.9)(70,1.6)(90,1.4)(110,1.2)(120,1.1)(130,1)(140,0.9)(160,0.7)(180,0.5)(200,0.3)(220, 0.1)
+%     };
+%     \legend{}
+%
+% \end{axis}
+% \end{tikzpicture}
+% \end{center}
+%TO DO: test cu fir de 40 m
+\chapter{Sistemul global de poziționare (GPS)}
+\section{Alcătuirea sistemului}
+Sistemul global de poziționare (GPS) este deținut de Statele Unite ale Americii și oferă utilizatorilor servicii de poziționare, navigare și sincronizare. Acest sistem este format din trei segmente ilustrate și în Figura \ref{fig:gps_segmente}:
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.185]{pics/gps_segmente.png}
+  \caption{Cele trei segmente ale GPS-ului}
+  \label{fig:gps_segmente}
+\end{figure}
+\begin{itemize}
+\item	Segmentul spațial~\cite{van1998global} este alcătuit din sateliți care înconjoară Pământul la o altitudine de aproximativ 20000 km. Din 2016 există 32 de sateliți, dintre care 31 sunt în uz.
+Perioada orbitală este de aproximativ 12 ore, iar sateliții urmează aproape același traseu în fiecare zi, astfel încât minim șase sateliți sunt întotdeauna vizibili de oriunde pe Glob, datorită poziționării orbitelor.
+\item
+Segmentul de control este cuprins din mai multe stații, printre care o stație de control principală, o stație de control care alternează, patru antene dedicate la sol și șase stații de monitorizare dedicate prezente și în Figura \ref{fig:gps_map}.
+
+Stația de comandă principală, localizată în Colorado, Statele Unite ale Americii, recepționează și analizează datele primite de la stațiile de monitorizare carre supraveghează sateliții vizibili, be baza cărora sunt generate mesaje către sateliți.
+Antenele de la sol pot realiza o comunicare full duplex cu sateliții și permit astfel transmisia și recepția de comenzi și date către și de la satelit.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.1]{pics/GPS_map.png}
+  \caption{Stațiile segmentului de control\protect\footnotemark}
+  \label{fig:gps_map}
+\end{figure}
+\footnotetext{©
+\url{https://www.gps.gov/systems/gps/control/}}
+\item Segmentul utilizatori este constituit din totalitatea receptoarelor GPS. Antena recepționează una dintre benzile de frecvență cu purtătoare (L1, L2) sau chiar ambele, în funcție de specificațiile hardware ale receptorului.
+\end{itemize}
+
+\subsection{Semnale GPS}
+Cei mai recenți sateliți transmit pe două benzi de frecvență L1 (1575.42MHz) și L2 (1227.6MHz). Semnalele purtătoare sunt modulate prin BPSK, adică modulație în fază a semnalului binar.
+
+\begin{table}[th]\small\linespread{1}
+	\centering
+\caption{Benzile de frecvență}
+\label{tab:benzi}
+% \begin{tabular}{l >{\raggedright\arraybackslash}p{8cm} >{\raggedright\arraybackslash}p{4cm}}
+\begin{tabular}{||c c c c||}
+  \hline
+\textbf{Bandă} & \textbf{ Semnal cod} & \textbf{Disponibilitate} & \textbf{Frecvență semnal cod} \\\hline\hline
+L1 & C/A & Civilă & 1.023 MHz\\\hline
+L1/L2 & P(Y) & Cu autorizație & 10.23 MHz\\\hline
+L2 & L2CM & Civilă & 511.5 kHz\\\hline
+L2 & L2CL & Civilă & 511.5 kHz\\\hline
+L1/L2 & M & Cu autorizație & 5.115 kHz\\\hline
+\end{tabular}
+\end{table}
+
+După cum se poate observa în Tabela \ref{tab:benzi}, codul C/A este transmis pe banda de frecvență L1 ca un semnal de frecvența 1.023 MHz, iar codul P(Y) este transmis pe ambele benzi de frecvență L1 și L2 ca un semnal de frecvența 10.23 MHz.
+%https://www.e-education.psu.edu/geog862/node/1753
+Banda de frecvență L1 este destinată uzului civil, de aceea majoritatea receptoarelor cu cost redus transmit pe această bandă, care conține două semnale C/A și P(Y), vizibile în Figura \ref{fig:l1_gps_signals}. Codul C/A modulează purtătoarea L1, pe când codul P modulează fazele ambelor purtătoare.
+
+Sateliții au un identificator unic, numit cod de zgomot pseudoaleator (PRN), care permite să se transmită informații diferite pe aceeași bandă de frecvență. Receptorul GPS cunoaște codul de zgomot pseudoaleator al sateliților și astfel se recepționează semnalul corespunzător. Semnalele de cod P(Y) și C/A sunt tipuri de coduri de zgomot pseudoaleator.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=1.3]{pics/l1_gps_signals.jpg}
+  \caption{Semnale în banda de frecvență L1\protect\footnotemark }
+  \label{fig:l1_gps_signals}
+\end{figure}
+\footnotetext{©
+\url{https://www.e-education.psu.edu/geog862/node/1753}}
+
+Sateliții GPS, numiți și Block-uri sunt ilustrați în Figura \ref{fig:sateliti_blocuri} ~\cite{hegarty2008evolution}. Dintre cei 31 de sateliți în uz, se înnumără 13 Block IIA, 12 Block IIR și 6 Block IIR-M.
+%https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4745647
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.5]{pics/sateliti_blocuri.jpg}
+  \caption{Evoluția sateliților GPS\protect\footnotemark }
+  \label{fig:sateliti_blocuri}
+\end{figure}
+\footnotetext{©
+\url{https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4745647}}
+\section{Protocoale de transmisie GPS}
+\subsection{Protocolul NMEA}
+Protocolul NMEA (Asociația Națională de Electronică Marină) expune informațiile primite de la GPS în formatul ASCII care poate fi interpretat de către oameni.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.7]{pics/nmea.jpg}
+  \caption{Exemplu de cadre NMEA0183 citite de la GPS prin programul U-center}
+  \label{fig:nmea}
+\end{figure}
+
+După cum se poate observa în Figura \ref{fig:nmea}, începutul fiecărui cadru NMEA este identificat prin caracterul "\$", urmat de o secvență care identifică sistemul de navigare. În cazul nostru "GP" identifică sistemul de navigare GPS, dar poate apărea și "GL" care identifică sistemul de navigare GLONASS. În continuare, cele 3 caractere cu majusculă definesc conținutul mesajului și acestea pot fi:
+\begin{itemize}
+	\item RMC – conține informații precum latitudine, longitudine, viteză, curs.
+	\item GGA – conține informații precum poziție, elevație, oră, numărul de sateliți utilizați, tipul de remediere și vârsta de corecție.
+	\item GSA – conține informații detaliate despre sateliți.
+	\item GLL - conține informații precum latitudine și longitudine, timpul de fixare a poziției și statusul.
+	\item GSV - conține informații despre fiecare satelit vizibil, precum elevație, azimut, numarul de identificare al satelitului.
+	\item GBS - conține informații despre posibile erori în latidudine, longitudine, altitudine.
+	\item GRS - conține informații despre reziduuri.
+	\item GST - conține informații despre deviațiile standard.
+\end{itemize}
+Datele utile sunt separate prin virgulă, iar sfârșitul acestora este delimitat de caracterul "*". Ultimele două caractere sunt reprezentate de suma de control care are rolul de a identifica dacă transmisia a fost realizată corect.
+\subsection{Protocolul UBX}
+Protocolul UBX~\cite{ubloxdatasheet} prezintă cadre în format binar. Începutul fiecărui cadru este marcat de un cod pe 2 bytes în Hexazecimal (0xB5 0x62), iar apoi urmează un cod de 1 byte care identifică clasa mesajului și 1 byte pentru ID-ul clasei. Lungimea datelor utile este dată de următorii 2 bytes în reprezentare Little Endian, iar după datele utile propriu-zise mesajul se termină prin cei 2 bytes pentru suma de control.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.3]{pics/ubx.jpg}
+  \caption{Formatul cadrelor UBX}
+  \label{fig:ubx}
+\end{figure}
+% \footnotetext{©
+% \url{https://www.u-blox.com/sites/default/files/products/documents/u-blox6_ReceiverDescrProtSpec_%28GPS.G6-SW-10018%29_Public.pdf}}
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.7]{pics/ubx_message.jpg}
+  \caption{Exemplu de cadre UBX citite de la GPS prin programul U-center}
+  \label{fig:ubx_message}
+\end{figure}
+
+Protocolul UBX este adesea folosit de către receptoarele GPS fabricate de către u-blox.
+\newpage
+\section{Sisteme de referință}
+În cadrul sistemului global de navigație prin satelit (GNSS) sunt utilizate două sisteme de referință:
+\begin{itemize}
+	\item Sistemul de referință terestru
+	\item Sistemul de referință ceresc
+\end{itemize}
+Sistemul de referință terestru ECEF~\cite{groves2013principles} reprezintă pozițiile punctelor de pe Pământ prin coordonate Carteziene (X, Y, Z), având originea în centrul de masă al Pământului. Axa X pornește din centrul Pământului și trece prin intersecția Ecuatorului cu Meridianul de \ang{0}. Axa Y este ortogonală cu axa X, pornește din centrul Pământului și trece prin intersecția Ecuatorului cu Meridianul de \ang{90}, iar axa Z coincide cu axa de rotație a Pământului.
+
+Sistemul de referință ceresc ECI~\cite{groves2013principles}, reprezintă, deasemena, pozițiile punctelor de pe Pământ prin coordonate Carteziene (X, Y, Z). Axele X și Y aparțin planului Ecuatorial, dar nu se rotesc împreună cu Pământul. Direcția axei X este dinspre Pământ spre Soare, atunci când Soarele se află în punctul vernal, la momentul echinocţiului de primăvară. Axa Z este aceeași ca în cazul sistemului ECEF, iar axa Y este ortogonală cu axa X și Z.
+
+Diferența dintre aceste două sisteme de referință este că sistemul ECEF se rotește împreună cu Pământul și coordonatele unui punct fix de pe suprafața Pământului vor rămâne aceleași, iar sistemul ECI nu se rotește împreună cu Pământul.
+
+\subsection{WGS84}
+GPS-ul este un sistem de poziționare global, cu ajutorul căruia se poate determina poziția unor puncte de pe orice suprafață a Terrei, cunoscând pozițiile mobile ale sateliților. Pentru o determinare corectă a pozițiilor punctelor este nevoie de un sistem de referință universal utilizat.
+Standardul universal WGS84 (Sistemul geodezic mondial 1984) reprezintă sistemul de referință adoptat în cadrul sistemului global de poziționare (GPS).
+\section{Principiul de funcționare GPS}
+Locația unui punct de pe Pământ poate fi determinată dacă receptorul GPS are cel puțin patru sateliți vizibili. Figura \ref{fig:gps_trilateration} ilustrează trei cazuri:
+\begin{itemize}
+  \item Când este un singur satelit vizibil, locația receptorului poate fi oriunde în cercul al cărui centru este reprezentat de satelit (în cazul unui plan 3D cercul devine o sferă).
+  \item Când sunt doi sateliți vizibili, locația receptorului poate fi reprezentată de cele două puncte care marchează intersecția celor două cercuri.
+  \item Când sunt trei sateliți vizibili, locația receptorului poate fi reprezentată de un singur punct care marchează intersecția celor 3 cercuri. Acest proces este cunoscut și sub numele de trilaterație. Cel de-al patrulea satelit fiind utilizat pentru a minimiza erorile de calcul.
+\end{itemize}
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.25]{pics/gps_trilateration.png}
+  \caption{Determinarea poziției unui punct în funcție de numărul de sateliți vizibili}
+  \label{fig:gps_trilateration}
+\end{figure}
+Există două metode prin care se calculează poziția unui punct: determinarea pseudo-distanței sau a fazei.
+\subsection{Determinarea pseudo-distanței}
+Pseudo-distanța~\cite{svaton2016low} reprezintă distanța parcursă de un semnal de la satelit la receptor, la care se adaugă erorile generate de ceas.
+Atunci când codul de zgomot pseudoaleator (PRN), unic pentru fiecare satelit, ajunge la receptor, se poate calcula intervalul de timp $\Delta t$ de la emisie până la recepție (ToA). Timpul de emisie $t_s$ (al satelitului) este transmis prin PRN, iar timpul de recepție $t_r$ este timpul receptorului GPS.
+\begin{equation}
+\Delta t = t_r - t_s
+\end{equation}
+Soluția abordată în construcția dispozitivelor de recepție destinate uzului civil pentru a menține ceasul intern este bazată pe încorporarea unui cristal de cuarț, care de multe ori este ieftin. Pe de altă parte, sateliții sunt dotați cu ceasuri atomice foarte precise și această diferență de precizie dintre ceasurile de la emisie și recepție generează erorile de ceas.
+Sistemului global de navigație prin satelit (GNSS) are propriul timp de referință care ajută la sincronizarea celor trei segmente GPS. Atât ceasurile sateliților, cât și ale dispozitivelor de recepție pot să nu fie sincronizate cu timpul de referință al GPS-ului și rezultă astfel erorile sistematice $\delta S$ (satelit) și $\delta R$ (receptor).
+\begin{equation}
+\Delta t = \Delta t(GPS) + \Delta \delta
+\end{equation}
+Unde,
+\begin{equation}
+\Delta \delta = (\delta R - \delta S)
+\end{equation}
+Mesajul de navigație transmis de la satelit include și corecția de ceas a acestuia, iar eroarea sistematică generată de satelit este astfel corectată.
+\begin{equation}
+\Delta \delta = \delta R
+\end{equation}
+Viteza de propagare a unei unde radio în spațiu este egală cu viteza luminii $c$. Cunoscând intervalul de timp și viteza se poate determina pseudo-distanța $D$.
+\begin{equation}
+D = c \Delta t = c \Delta t(GPS) + c \Delta \delta
+\end{equation}
+\subsection{Determinarea fazei}
+O altă modalitate de a calcula poziția unui punct este prin determinarea fazei semnalului purtător. Pentru a realiza acest lucru, este nevoie să se determine numărul de lungimi de undă $N$ ale semnalului din momentul emisiei și până la recepție. Având în vedere faptul că nu avem certitudinea că la recepție toate lungimile de undă vor fi complet transmise, numărul N este definit ca o ambiguitate.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=1]{pics/phase_measurement.png}
+  \caption{Măsurarea fazei semnalului purtător\protect\footnotemark}
+  \label{fig:phase_measurement}
+\end{figure}
+\footnotetext{\url{https://www.e-education.psu.edu/geog862/node/1729}}
+
+Între receptorul GPS și satelit există o perioadă de observare ilustrată în Figura \ref{fig:phase_measurement}. La începutul observării, faza semnalului purtător este descrisă de două componente: $\alpha$ și ambiguitatea N, iar la finalul observării faza semnalului purtător mai conține o componentă $\beta$.
+
+La începutul observării, receptorul GPS primește faza inițială fracționară $\alpha$ a semnalului purtător și ambiguitatea N care reprezintă numărul de lungimi de undă complete care au fost transmise. Aceste două componente ale fazei semnalului purtător nu se schimbă pe parcursul observării.
+
+La finalul observării, receptorul GPS mai primește o componentă a fazei semnalului purtător $\beta$ care reprezintă numărul de lungimi de undă complete transmise în plus față de cele de la începutul observării. Aceasta este singura componentă care se schimbă pe parcursul perioadei de observare, dacă nu au loc întreruperi ale transmisiei semnalului purtător.
+
+Faza inițială fracționară $\alpha$ este interpretată de către receptorul GPS pe baza componentelor circuitului intern.
+
+Această modalitate de a determina poziția receptorului este mai precisă cât timp semnalul nu este întrerupt (exemplu: trecerea printr-un tunel). În cazul în care apare o întrerupere a semnalului transmis, măsurarea nu mai este certă și trebuie să se efectueze o masurătoare nouă deoarece se produce un salt de fază care duce la pierderea ambiguității N.
+\section{Erori generate de GPS}
+\subsection{Erori generate de ceas}
+După cum am precizat în secțiunea anterioară, sateliții sunt dotați cu ceasuri atomice precise, însă apar probleme de sincronizare între ceasul lor și timpul de referință GPS. În mesajul de navigație transmis de la satelit apar date care ajută la efectuarea unei corecții de ceas, precum coeficienții $a_0, a_1, a_2$ și timpul de ceas $t_{oc}$.
+Eroarea de ceas a satelitului~\cite{bidikar2014satellite} este modelată de o ecuație polinomială de ordinul 2:
+\begin{equation}
+\varepsilon_{sc} = a_0 + a_1 dt + a_2 dt^2
+dt = t_s - t_{oc}
+\end{equation}
+Timpul de referință GPS, $T_{GPS}$, este egal cu diferența dintre timpul de transmitere al satelitului $t_s$ și eroarea de ceas a satelitului $\varepsilon_{sc}$.
+\begin{equation}
+T_{GPS} = t_s - \varepsilon_{sc}
+\end{equation}
+\subsection{Erori generate de ionosferă}
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.4]{pics/ionosphere_density.png}
+  \caption{Densitatea electronilor din ionosferă \protect\footmarknote }
+  \label{fig:ionosphere_density}
+\end{figure}
+\footnotetext{\url{http://roma2.rm.ingv.it/en/research_areas/4/ionosphere}}
+După cum se poate observa în Figura \ref{fig:ionosphere_density}, densitatea electronilor din ionosfera, partea superioară a atmosferei, are un nivel mai scăzut pe timpul nopții față de nivelul atins pe timpul zilei. Când un semnal străbate acest strat, dimensiunea erorii variază datorită diferențelor de densitate a electronilor. Se poate ajunge la o creștere a erorii de până la 100m~\cite{svaton2016low}.
+\subsection{Erori generate de troposferă}
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.3]{pics/elevation.png}
+  \caption{Elevația și azimutul unui satelit \protect\footmarknote }
+  \label{fig:elevation}
+\end{figure}
+\footnotetext{\url{http://rediscoveries.blogspot.com/2017/05/a-little-bit-of-satellite-geometry.html}}
+Erorile datorate stratului de troposferă sunt generate în momentul în care elevația satelitului (Figura \ref{fig:elevation}) are o valoare mică.
+Eroarea depinde de condițiile meteo, precum presiune, umiditate, temperatură, iar aceste condiții afectează viteza de propagare a undelor. Întârzierile adăugate semnalului transmis pot fi de două feluri: hidrostatice datorate prezenței gazelor uscate în troposferă și umede datorate vaporilor de apă și de apa condensată sub formă de nori.
+\subsection{Erori generate de efemeride}
+Poziția sateliților este importantă pentru determinarea poziției unui punct. În momentul în care se transmit mesaje de navigație care conțin erori cu privire la poziția sateliților, acestea sunt erori generate de efemeride.
+TO DO
+\chapter{GPS Diferențial (DGPS)}
+În acest capitol se va prezenta principiul de funcționare al tehnicii de poziționare în timp real, GPS Diferențial, care presupune prezența a cel puțin două stații. Stația de referință calculează corecțiile pseudo-distanței (PRC) și corecțiile ratei de acoperire (RRC) care sunt transmise către receptorul aflat la distanță, în timp real. Utilizarea acestor corecții
+îmbunătățește precizia poziționării în raport cu stația de bază.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.3]{pics/dgps.png}
+  \caption{Principiul de funcționare GPS Diferențial \protect\footmarknote }
+  \label{fig:dgps}
+\end{figure}
+
+După cum este ilustrat în Figura \ref{fig:dgps}, pentru a realiza GPS Diferențial este nevoie de două stații: o stație fixă, numită stație de referință (SR), și o stație mobilă (M), ambele dotate cu module GPS. SR-ul are o poziție fixă, cunoscută, iar pe baza poziției măsurate în acel punct se poate calcula corecția, urmând ca aceasta să fie transmisă și către M. Poziția cunoscută a SR-ului rezultă în urma unor măsurători efectuate pe o perioadă de timp îndelungată, de preferat minim 24 de ore. În acest timp în care SR captează date despre poziția sa, au loc schimbările în stratul de ionosferă și troposferă descrise în capitolul Erori generate de GPS, ceea ce produce o variație asupra poziției. Precizia poziției fixe a SR-ului crește cu cât variația poziției pe timpul măsurătorii este mai mare. Desigur, pentru această procedură să se poată realiza, trebuie să existe cel puțin 4 sateliți vizibili pentru fiecare stație.
+
+Această metodă este larg utilizată pentru a localiza cu precizie sisteme precum drone și mașini de tuns iarba.
+TO DO poza cu variatia pozitiei pentru ore de receptionare.
+\section{Position domain DGPS - TO DO de tradus}
+O modalitate simplă~\cite{svaton2016low} prin care se poate determina o corecție a poziției stației M este prin calcularea diferenței dintre poziția cunoscută și cea măsurată a stației SR. Adăugând această diferență la poziția stației M, erorile generate de GPS se vor diminua.
+
+Stația SR își calculează poziția primită de la GPS conform ecuației următoare:
+\begin{equation}
+\vec{X}_{SR,GPS} = (H^T H)^{-1} H^T \vec{\rho}_{SR}
+\end{equation}
+Unde $H$ este matricea de observare GPS, iar $\vec{\rho}_{SR}$ este pseudo-distanța determinată pentru stația SR.
+
+Poziția fixă a stației SR este notată cu $\vec{X}_{SR,fix}$, iar poziția măsurată, primită de la modulul GPS, este notată cu $\vec{X}_{SR,GPS}$. Stația SR compară mereu aceste două poziții și determină corecția, $\vec{\delta_X}$, aplicând următoarea formulă:
+\begin{equation}
+\vec{\delta_X} = \vec{X}_{SR,fix} - \vec{X}_{SR,GPS}
+\end{equation}
+Stația SR transmite corecția $\vec{\delta_X}$ către stația M. Pentru a atenua eroare generată de GPS se adună corecția la poziția stației M, $\vec{X}_{M,GPS}$.
+\begin{equation}
+\vec{X}_{M,DGPS} =  \vec{X}_{M,GPS} + \vec{\delta_X}
+\end{equation}
+Dezavantajul acestei soluții este faptul că sunt generate corecții valide doar în cazul în care atât stația de referință, cât și stația mobilă au aceeași sateliți vizibili. În cazul în care stațiile au sateliți diferiți în aria de vizibilitate, corecția calculată prin această metodă poate duce la erori mult mai mari decât cele necorectate, generate de către GPS.
+\section{Range domain DGPS - TO DO de tradus}
+Pseudo-distanța determinată de GPS, după cum este descris în secțiunea "Determinarea pseudo-distanței", are următoarea formă:
+\begin{equation}
+D = c \Delta t = c \Delta t(GPS) + c \Delta \delta
+\end{equation}
+Pseudo-distanța D~\cite{hofmann2012global} descrisă prin cele trei coordonate x, y, z, pentru satelitul $i$ este determinată de următoarea ecuație:
+\begin{equation}
+D(x,y,z)^i = c \Delta t^i(GPS) + c \Delta \delta = \rho^i + \Delta\rho_{r}^i + \Delta\rho^i + \Delta\rho_{r}
+\end{equation}
+Unde,
+\begin{equation}
+\rho^i = \sqrt{(X^i-x)^2 + (Y^i-y)^2 + (Z^i-z)^2}
+\end{equation}
+\begin{itemize}
+  \item $X^i, Y^i, Z^i$ sunt coordonatele ECEF ale satelitului $i$
+  \item $x, y, z$ sunt coordonatele ECEF ale poziției de calculat
+  \item $\rho^i$ este distanța dintre receptor și satelitul $i$
+  \item $\Delta\rho_{r}^i$ este o eroare sistematică dependentă de poziția satelitului $i$ (efemeride, efectele datorate refracției în ionosferă și troposferă)
+  \item $\Delta\rho^i$ este o eroare de ceas a satelitului $i$ echivalentă cu $-c\Delta \delta_S$
+  \item $\Delta\rho_{r}$ este o eroare sistematică a ceasului receptorului plus alte erori suplimentare echivalentă cu $c\Delta \delta_r + M$
+\end{itemize}
+Pseudo-distanța D a stației SR în momentul $t_0$ este descrisă de ecuația:
+\begin{equation}
+D_{SR}^i(t_0) =  \rho_{SR}^i(t_0) + \Delta\rho_{SR}^j(t_0) + \Delta\rho^i(t_0) + \Delta\rho_{SR}(t_0)
+\end{equation}
+Corecția pseudo-distanței (PRC)~\cite{hofmann2012global} a satelitului $i$ este adăugată la pseudo-distanța măsurată:
+\begin{equation}
+PRC_{SR}^i(t_0) =  \rho_{SR}^i(t_0) - D_{SR}^i(t_0) = - \Delta\rho_{SR}^i(t_0) - \Delta\rho^i(t_0) - \Delta\rho_{SR}(t_0)
+\end{equation}
+\begin{equation}
+PRC_{SR}^i(t) =  PRC_{SR}^i(t_0) + RRC_{SR}^i(t_0)(t - t_0)
+\end{equation}
+Unde RRC este utilizat pentru a estima corecția pseudo-distanței (PRC) la momentul $t$. PRC-ul este transmis către stația M în timp real.
+
+Stația M își estimează pseudo-distanța în același mod precum stația SR:
+\begin{equation}
+D_{M}^i(t_0) =  \rho_{M}^i(t_0) + \Delta\rho_{M}^i(t_0) + \Delta\rho^i(t_0) + \Delta\rho_{M}(t_0)
+\end{equation}
+PRC-ul determinat de stația SR este adăugat la distanța stației M, pentru a se calcula poziția corectată:
+\begin{equation}
+D_{M}^i(t)_{corectat} =  D_{M}^i(t) + PRC_{SR}^i(t)
+\end{equation}
+\begin{equation}
+D_{M}^i(t)_{corectat} =  \rho_{M}^i(t) + \Delta\rho_{M}^i(t) + \Delta\rho^i(t) + \Delta\rho_{M}(t) + (- \Delta\rho_{SR}^i(t) - \Delta\rho^i(t) - \Delta\rho_{SR}(t))
+\end{equation}
+\begin{equation}
+D_{M}^i(t)_{corectat} =  \rho_{M}^i(t) + (\Delta\rho_{M}^i(t) - \Delta\rho_{SR}^i(t)) + (\Delta\rho_{M}(t) - \Delta\rho_{SR}(t))
+\end{equation}
+Pentru distanțe moderate între stația SR și stația M, $\Delta\rho_{M}(t)$ și $\Delta\rho_{SR}(t)$ sunt corelate. Neglijând aceste erori sistematice, rezultă ecuația:
+\begin{equation}
+D_{M}^i(t)_{corectat} =  \rho_{M}^i(t) + (\Delta\rho_{M}^i(t) - \Delta\rho_{SR}^i(t)) = \rho_{M}^i(t) + \Delta\rho_{r,SR}^i(t)
+\end{equation}
+\section{Erori generate de GPS Diferențial}
+\begin{table}[th]\small\linespread{1}
+	\centering
+  \caption{Diferența dintre erorile generate de GPS și GPS Diferențial~\cite{forssell2008radionavigation}}
+  \label{tab:erori_dgps}
+ \begin{tabular}{||c c c||}
+ \hline
+  & GPS Semnal de cod C/A(m) & DGPS Semnal de cod C/A(m) \\ [0.5ex]
+ \hline\hline
+Erori de ceas ale satelitului & 1-3 & 0  \\
+ \hline
+Erori generate de efemeride & 2.5-7 & 0-0.1  \\
+ \hline
+Erori generate de ionosferă & 2-15 & 0.1-1.5  \\
+ \hline
+ Erori generate de troposferă & 0.4-2 & 0.1-1.5 \\
+ \hline
+ Interval eroare rezultată & 4-18 & 2-6  \\
+ \hline
+Eroare pe orizontală & 6-27 & 3-9  \\
+\hline
+Eroare pe verticală & 10-45 & 5-15  \\ [1ex]
+ \hline
+\end{tabular}
+\end{table}
+
+O analiză~\cite{forssell2008radionavigation} între erorile generate de GPS și GPS Diferențial este prezentă în Tabela \ref{tab:erori_dgps}. Rezultatele evidențiază o înjumătățire a erorilor generate de ceas, ionosferă și troposferă în cazul folosirii unui sistem GPS Diferențial.
+
+\section{Sistem GPS Diferențial}
+Sistemul GPS Diferențial implementat (Figura \ref{fig:dgps_diagram}) este alcătuit din două stații, o stație fixă, de referință (SR) și o stație mobilă.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.18]{pics/dgps_diagram.png}
+  \caption{Schema bloc a sistemului GPS Diferențial}
+  \label{fig:dgps_diagram}
+\end{figure}
+
+Stația SR dispune de o placă de dezvoltare Udoo Neo pentru partea computațională, un modul de GPS uBlox Neo6M (Figura \ref{fig:esp8266}) pentru a putea determina poziția cunoscută și cea măsurată și un modul Wi-Fi ESP8266 ESP-01 pentru comunicarea cu stația M. Stația SR este amplasată la sol într-un loc fix și are rolul de a determina corecția poziției stației M.
+% \begin{figure}%
+%     \centering
+%     \includegraphics[scale=0.16]{pics/udoo_neo.jpg}
+%     \caption{Placa de dezvoltare Udoo Neo\protect\footnotemark}%
+%     \label{fig:udoo_neo}%
+% \end{figure}
+% https://shop.udoo.org/other/udoo-neo-extended1.html
+
+
+Stația M presupune integrarea cu placa de dezvolare Arduino Mega de pe robot care parsează datele primite de la receptorul GPS uBlox Neo6M și transmite datele către stația SR cu ajutorul unui modul Wifi ESP8266 ESP-01 (Figura \ref{fig:esp8266}). După ce este calculată corecția și transmisă către stația M, se determină poziția corectată.
+% \footnotetext{\url{https://shop.udoo.org/other/udoo-neo-extended1.html}}
+
+Comunicația între cele două stații are la bază două module Wi-Fi ESP8266 ESP-01 care au un cost redus. Modulul Wi-Fi de pe stația SR este configurat în modul Punct de Acces, iar modulul de pe stația M este configurat în modul Client.
+% https://www.ebay.com/itm/Ublox-NEO-6M-GPS-Module-Aircraft-Flight-Controller-For-Arduino-MWC-IMU-APM2-/311569476192
+% \begin{figure}[th]
+% \centering
+% \includegraphics[scale=0.4]{pics/gps_ublox.jpg}
+%   \caption{Modul GPS uBlox Neo6M cu antenă\protect\footnotemark}
+%   \label{fig:gps_ublox}
+% \end{figure}
+
+\begin{figure}[th]%
+    \centering
+    \subfloat[Modul GPS uBlox Neo6M cu antenă]{{\includegraphics[scale=0.6]{pics/gps_ublox.jpg} }}%
+    % \caption{Modul GPS uBlox Neo6M cu antenă\protect\footnotemark}
+    % \label{fig:gps_ublox}
+    \subfloat[Modul Wi-Fi ESP8266 ESP-01]{{\includegraphics[scale=0.3]{pics/esp8266.jpg} }}%
+    \caption{Modulele GPS și Wi-Fi utilizate în sistemul GPS Diferențial\protect\footnotemark}%
+    \label{fig:esp8266}
+\end{figure}
+
+\footnotetext{\url{https://www.ebay.com/itm/Ublox-NEO-6M-GPS-Module-Aircraft-Flight-Controller-For-Arduino-MWC-IMU-APM2-/311569476192}}
+\section{Implementare sistem GPS Diferențial}
+\subsection{Determinarea poziției fixe a stației SR}
+Pentru a determina poziția fixă a stației SR prin metoda Position Domain (TO DO De tradus) au fost inregistrare date (latitudine, longitudine, altitudine) de la modulul GPS aflat într-o poziție fixă, pe o perioadă de 12 ore. Modulul GPS a fost conectat la portul USB al calculatorului prin intermediul unui circuit convertor Serială - Micro USB și a unui cablu Micro USB - USB. Astfel, selectând portul la care am conectat modulul GPS în cadrul programului U-center, se pot vizualiza datele recepționate într-o interfață grafică care permite și realizarea unor înregistrări pe tot parcursul recepției (Figura \ref{fig:u-center}).
+\begin{figure}[th]%
+    \centering
+    \includegraphics[scale=0.35]{pics/u-center.jpg}
+    \caption{Interfața grafică a programului U-center populată cu date de la modulul GPS}%
+    \label{fig:u-center}%
+\end{figure}
+
+Timp de 12 ore modulul GPS a transmis date, iar înregistrările din programul U-center pe parcursul transmisiei pe o rază de 50 m se pot vedea în Figura \ref{fig:deviatii_gps_1} și Figura \ref{fig:deviatii_gps_2}. Măsurătoarea a început la ora 15:00 pm și s-a terminat la ora 3:00 am, astfel recepționându-se date atât pe timp de zi, cât și pe timp de noapte. Deasemenea, condițiile meteorologice au variat de la condiții normale (cer senin cu soare), la condiții grele (cer înnorat și averse). În acest timp în care stația SR a recepționat date despre poziția sa, au avut loc schimbările în stratul de ionosferă și troposferă descrise în capitolul Erori generate de GPS, ceea ce produce o variație asupra poziției. Totuși, trebuie precizat și faptul că măsurătoarea a avut loc într-un punct în care există clădiri și copaci în jumătatea spațiului de vizibilitate.
+
+Datele (latitudine, longitudine, altitudine) transmise pe serială au fost afișate în programul Coolterm, conectând portul plăcii de dezvoltare la program (Figura \ref{fig:coolterm}). În cadrul programului există opțiunea de scriere în fișier a datelor afișate. Astfel, toate datele recepționate de-a lungul celor 12 ore au fost stocate într-un fișier de format txt.
+\begin{figure}[th]%
+    \centering
+    \subfloat[2 ore, 30 minute]{{\includegraphics[scale=0.3]{pics/deviatie_2_h_jumate-01.png} }}%
+    % \caption{Modul GPS uBlox Neo6M cu antenă\protect\footnotemark}
+    % \label{fig:gps_ublox}
+    \subfloat[4 ore, 30 minute]{{\includegraphics[scale=0.302]{pics/deviatii_4_h_jumate-01.png} }}%
+    \caption{Deviația poziției pe o rază de 50 m într-un interval de timp din programul U-center}%
+    \label{fig:deviatii_gps_1}
+\end{figure}
+
+\begin{figure}[th]%
+    \centering
+		\subfloat[7 ore]{{\includegraphics[scale=0.3]{pics/deviatie_7_h-01.png} }}%
+		\subfloat[10 ore]{{\includegraphics[scale=0.2935]{pics/deviatii_10_h-01.png} }}%
+    \caption{Deviația poziției pe o rază de 50 m într-un interval de timp din programul U-center}%
+    \label{fig:deviatii_gps_2}
+\end{figure}
+\begin{figure}[th]%
+    \centering
+		\subfloat[2 ore, 30 minute]{{\includegraphics[scale=0.3]{pics/deviatii_map_2_h_jumate-01.png} }}%
+		\subfloat[4 ore, 30 minute]{{\includegraphics[scale=0.3]{pics/deviatii_map_4_h_jumate-01.png} }}%
+    \caption{Deviația poziției pe hartă într-un interval de timp, din programul U-center}%
+    \label{fig:deviatii_gps_3}
+\end{figure}
+\begin{figure}[th]%
+    \centering
+    \subfloat[7 ore]{{\includegraphics[scale=0.305]{pics/deviatii_map_7_h-01.png} }}%
+    \subfloat[9 ore]{{\includegraphics[scale=0.3]{pics/deviatii_9_h-01.png} }}%
+    \caption{Deviația poziției pe hartă într-un interval de timp, din programul U-center}%
+    \label{fig:deviatii_gps_4}
+\end{figure}
+\begin{figure}[th]%
+    \centering
+		\subfloat[10 ore]{{\includegraphics[scale=0.305]{pics/deviatii_map_10_h-01.png} }}%
+		\subfloat[12 ore]{{\includegraphics[scale=0.3]{pics/deviatii_map_12_h-01.png} }}%
+    \caption{Deviația poziției pe hartă într-un interval de timp, din programul U-center}%
+    \label{fig:deviatii_gps_5}
+\end{figure}
+
+Tot în cadrul programului U-center se poate vedea variația poziției pe hartă, pe timpul măsurătorii, care este ilustrată la diferite intervale de timp de la începutul măsurătorii în Figurile \ref{fig:deviatii_gps_3}, \ref{fig:deviatii_gps_4} și \ref{fig:deviatii_gps_5}.
+\begin{figure}[th]%
+    \centering
+    \includegraphics[scale=0.5]{pics/coolterm.png}
+    \caption{Afișarea datelor în programul Coolterm}%
+    \label{fig:coolterm}%
+\end{figure}
+% \subsection{Comunicația între stația SR și stația M}
+\chapter{Evaluare}
+% Acest capitol trebuie să răspundă, în principiu, la 2 întrebări și să se încheie cu o discuție a rezultatelor obținute. Cele doua întrebări la care trebuie sa se răspundă sunt:
+% \begin{enumerate}
+% 	\item  \textbf{Merge corect?} (Conform specificațiilor extrase în capitolul 2);
+% Evaluarea dacă merge corect se face pe baza cerințelor identificate în capitolele anterioare.
+
+% 	\item Cât de \textit{Bine} merge / cum se compară cu soluțiile existente? (pe baza unor metrici clare).
+% Evaluarea cât de \textit{Bine} merge trebuie să fie bazată pe procente, timpi, cantitate, numere, \textbf{comparativ cu soluțiile prezentate în capitolul 3}. Poate fi vorba de performanță, overhead, resurse consumate, scalabilitate etc.
+% \end{enumerate}
+
+% În realizarea discuției, se vor utiliza tabele cu procente, rezultate numerice și grafice. În mod obișnuit, aici se fac comparații și teste comparative cu alte proiecte similare (dacă există) și se extrag puncte tari și puncte slabe. Se ține cont de avantajele menționate și se demonstrează viabilitatea abordării / aplicației, de dorit prin comparație cu alte abordări (dacă acest lucru este posibil). Cuvântul cheie la evaluare este ``metrică'': trebuie să aveți noțiuni măsurabile și cuantificabile. În cadrul procesului de evaluare, explicați datele, tabelele și graficele pe care le prezentați și insistați pe relevanța lor, în următorul stil: ``este de preferat ... deoarece …''; explicați cititorului nu doar datele ci și semnificația lor și cum sunt acestea interpretate. Din această interpretare trebuie să rezulte poziționarea proiectului vostru printre alternativele existente, precum și cum poate fi acesta îmbunătățit în continuare.
+
+% Criterii pentru calificativul \textit{Ne\textit{Satisfăcător}}:
+% \begin{itemize}
+% 	\item Aplicația este testată dar rulează pe calculatorul studentului, nu există posibilități de testare, nu a fost validată cu clienți / utilizatori;
+% 	\item Nu au fost realizate comparații cu alte sisteme similare.
+% \end{itemize}
+
+% Criterii pentru calificativul \textit{Satisfăcător}:
+% \begin{itemize}
+% 	\item \dezvoltare  Există teste unitare și de integrare, există o strategie de punere în funcțiune (deployment), există validare minimală cu clienții / utilizatorii.
+% 	\item \cercetare Principalele componente și soluția în ansamblu au fost evaluate din punct de vedere al performanței, însă nu sunt folosite seturi de date standard, există unele erori de interpretare a datelor.
+% 	\item \ambele Discuție minimală asupra relevanței rezultatelor prezentate, comparație minimală cu alte sisteme similare.
+% \end{itemize}
+
+% Criterii pentru calificativul \textit{Bine}:
+% \begin{itemize}
+% 	\item \dezvoltare Teste unitare și de integrare, instrumente de punere in funcțiune (deployment) utilizate și care arată lucru constant de-a lungul semestrului, lucrare validată cu clienții / utilizatorii, produs în producție.
+% 	\item \cercetare Componentele și soluția în ansamblu au fost evaluate din punct de vedere al performanței, folosind seturi de date standard și cu o interpretare corectă a rezultatelor.
+% 	\item \ambele Discuție cu prezentarea calitativă și cantitativă a rezultatelor, precum și a relevanței acestor rezultate printr-o comparație complexă cu alte sisteme similare.
+% \end{itemize}
+\chapter{Îmbunătățiri viitoare}
+\section{Stație de încărcare}
+Modelele de mașini de tuns iarba automate dispun de o stație de încărcare. În momentul în care bateria scade sub un anumit prag, mașina de tuns iarba intră în modul de căutare a stației de încărcare. Unele modele, precum HUSQVARNA Automower 450X, pot avea mai multe moduri de căutare a stației de încărcare, printre care un mod de căutare aleator pănâ când se ajunge în vecinătatea stației de încărcare sau un mod de căutare bazat pe urmărirea firului de frontieră până la locația de amplasare a stației.
+\begin{figure}[th]
+    \centering
+    \subfloat[Modul aleator]{{\includegraphics[scale=0.23]{pics/statie_incarcare_aleator.png} }}%
+    % \caption{Modul GPS uBlox Neo6M cu antenă\protect\footnotemark}
+    % \label{fig:gps_ublox}
+    \subfloat[Modul bazat pe firul de frontieră]{{\includegraphics[scale=0.28]{pics/statie_incarcare_fir.png} }}%
+    \caption{Moduri de căutare stație de încărcare HUSQVARNA Automower 450X\protect\footnotemark}%
+    \label{fig:moduri_statie_incarcare}%
+\end{figure}
+\footnotetext{\url{TO DO PDF MANUAL}}
+\begin{figure}[th]
+    \centering
+    \includegraphics[scale=0.37]{pics/husqvarna_charging_station.jpg}
+    \caption{Stație de încărcare HUSQVARNA Automower 450X\protect\footnotemark}%
+    \label{fig:mobile_app}%
+\end{figure}
+\footnotetext{\url{http://www.smallengines.co.nz/pages/husqvarna-automower-450x/}}
+\section{PCB}
+O posibilă îmbunătățire a proiectului este proiectarea unui circuit imprimat care sa integreze toate componentele hardware utilizate. Astfel, se va reduce spațiul ocupat de circuit. TO DO
+\section{Sistem de navigare}
+\section{Sistem antifurt}
+O modalitate de a preveni furtul roboților de tuns iarba, adoptată de majoritatea modelelor HUSQVARNA Automower, este integrarea unui sistem de securitate cu cod PIN. Astfel, robotul poate fi pornit doar de către utilizator prin introducerea codului PIN unic.
+\begin{figure}[th]
+    \centering
+    \includegraphics[scale=0.4]{pics/husqvarna_pin.jpg}
+    \caption{Sistem cu cod PIN HUSQVARNA Automower 450X\protect\footnotemark}%
+    \label{fig:mobile_app}%
+\end{figure}
+\footnotetext{\url{https://www.husqvarna.com/us/lawn-and-garden/how-to-guides/robot-lawn-mower-faq/}}
+\section{Lame de tăiat iarba pivotante}
+\begin{figure}[th]
+    \centering
+    \includegraphics[scale=0.35]{pics/lama_pivotanta.jpg}
+    \caption{Lamă pivotantă HUSQVARNA Automower 430X\protect\footnotemark}%
+    \label{fig:mobile_app}%
+\end{figure}
+\footnotetext{\url{http://www.smallengines.co.nz/pages/husqvarna-automower-330x/}}
+
+Modelul HUSQVARNA Automower 430X dispune de lame de tăiat pivotante care intră în interiorul discului de care sunt prinse, la contactul cu un obiect. Această mișcare de pivotare a lamelor reduce gradul de deteriorare a obiectelor de dimensiune mică care pot ajunge sub robot în timpul mersului deoarece senzorii de distanță nu le detectează prezența.
+\section{Aplicație mobilă}
+După cum am prezentat în capitolul "Studiu de Piață", în Tabela \ref{tab:comparatie}, modelele de mașini de tuns iarba au și aplicație mobilă (Figura \ref{fig:mobile_app}) pe care utilizatorii o pot folosi pentru a da comenzi mașinii de tuns și a ajusta setările acesteia.
+\begin{figure}[th]
+    \centering
+    \includegraphics[scale=0.27]{pics/husqvarna_mobile_app.jpg}
+    \caption{Aplicație mobilă HUSQVARNA Automower 450X\protect\footnotemark}%
+    \label{fig:mobile_app}%
+\end{figure}
+\footnotetext{\url{http://robotnyheter.se/2018/01/21/husqvarna-automower-315x-uppkopplad-robotgrasklippare-med-gps-stoldskydd/}}
+\section{PCB}
+\chapter{Concluzii}
+% În acest capitol este sumarizat întreg proiectul, de la obiective, la implementare, si la relevanta rezultatelor obținute. În finalul capitolului poate exista o subsecțiune de ``Dezvoltări ulterioare''.
+
+% Criterii pentru calificativul \textit{Ne\textit{Satisfăcător}}:
+% \begin{itemize}
+% 	\item	Concluziile nu sunt corelate cu conținutul lucrării;
+% \end{itemize}
+
+% Criterii pentru calificativul \textit{Satisfăcător}:
+% \begin{itemize}
+% 	\item	Concluziile sunt corelate cu conținutul lucrării, însă nu se oferă o imagine asupra calității și relevantei rezultatelor obținute;
+% \end{itemize}
+
+% Criterii pentru calificativul \textit{Bine}:
+% \begin{itemize}
+% 	\item	Concluziile sunt corelate cu conținutul lucrării, și se oferă o imagine precisa asupra relevantei și calității rezultatelor obținute în cadrul proiectului.
+% \end{itemize}
+
+% \chapter{Bibliografie}
+% % * <marios.choudary@gmail.com> 2018-02-28T12:07:48.730Z:
+% %
+% % > BIBLIOGRAFIE
+% % Am adaugat un paragraf cu cateva detalii despre folosirea citarilor bibliografice in Latex, despre folosirea lui "\cite" si despre posibilitatea folosirii bibliografiei si direct in fisierul Latex.
+% %
+% % ^.
+%
+% \begin{itemize}
+% 	\item 	NU utilizați referințe la Wikipedia sau alte surse fără autor asumat.
+% 	\item 	Pentru referințe la articole relevante accesibile în web (descrise prin URL) se va nota la bibliografie și data accesării.
+% 	\item 	Mai multe detalii despre citarea referințelor din internet se pot regăsi la:
+% 	\begin{itemize}
+% 		\item	\url{http://www.writinghelp-central.com/apa-citation-internet.html}
+% 		\item	\url{http://www.webliminal.com/search/search-web13.html}
+% 	\end{itemize}
+% 	\item 	Note de subsol se utilizează dacă referiți un link mai puțin semnificativ o singură dată; Dacă nota este citată de mai multe ori, atunci utilizați o referință bibliografică.
+% 	\item 	Dacă o imagine este introdusă în text și nu este realizată de către autorul lucrării, trebuie citată sursa ei (ca notă de subsol sau referință - este de preferat utilizarea unei note de subsol).
+% 	\item 	Referințele se pun direct legate de text (de exemplu ``KVM [1] uses'', ``as stated by Popescu and Ionescu [12]'', etc.). Nu este recomandat să folosiți formulări de tipul ``[1] uses'', ``as stated in [12]'', ``as described in [11]'' etc..
+% 	\item 	Afirmațiile de forma ``are numerous'', ``have grown exponentially'', ``are among the most used'', ``are an important topic'' trebuie să fie acoperite cu citări, date concrete si analize comparative.
+% 	\begin{itemize}
+% 		\item	Mai ales în capitolele de introducere, ``state of the art'', ``related work'' sau ``background'' trebuie să vă argumentați afirmațiile prin citări. Fiți autocritici și gândiți-vă dacă afirmațiile au nevoie de citări, chiar și cele pe care le considerați evidente.
+% 		\item	Cea mai mare parte dintre citări vor fi în capitolele de introducere ``state of the art'', ``related work'' sau ``background''.
+% 	\end{itemize}
+% 	\item 	Toate intrările bibliografice trebuie citate în text. Nu le adăugați pur și simplu la final.
+% 	\item 	Nu copiați sau traduceți niciodată din surse de informație de orice tip (online, offline, cărți, etc.). Dacă totuși doriți să oferiți, prin excepție, un citat celebru - de maxim 1 frază- utilizați ghilimele și evident menționați sursa. .
+% 	\item 	Dacă reformulați idei sau creați un paragraf rezumat al unor idei folosind cuvintele voastre, precizați cu citare (referință bibliografică) sau cu notă de subsol sursa sau sursele de unde ați preluat ideile.
+% \end{itemize}
+%
+% Trebuie respectat un singur standard de trimiteri bibliografice (citare), dintre următoarele alternative:
+% \begin{itemize}
+% 	\item APA (\url{http://pitt.libguides.com/c.php?g=12108\&p=64730})
+% 	\item IEEE (\url{https://ieee-dataport.org/sites/default/files/analysis/27/IEEE\%20Citation\%20Guidelines.pdf})
+% 	\item Harvard (\url{https://libweb.anglia.ac.uk/referencing/harvard.htm})
+% 	\item Cu numerotarea referințelor în ordine alfabetică sau în ordinea apariției în text (de exemplu, stilul cu numere folosit de unele publicații ACM - \url{https://www.acm.org/publications/authors/reference-formatting})
+% \end{itemize}
+%
+% În Latex este foarte ușor să folosiți referințe într-un mod corect și unitar, fie prin adăugarea unei secțiuni
+% \verb!\begin{thebibliography}!
+% (vezi la sfârșitul acestei secțiuni), fie printr-un fișier separat de tip bib, folosind comanda
+% \verb!\bibliography{}!,
+% așa cum procedăm mai jos prin folosirea fișierului ``bibliography.bib''. În orice caz, în Latex va trebui să folosiți comanda
+% \verb!\cite{}!
+% pentru a adăuga referințe, iar această comandă trebuie folosită direct în text, acolo unde vreți sa apară citația, ca în exemplele următoare:
+% \begin{itemize}
+% 	\item Articol jurnal: ~\cite{van1998global};
+% 	\item Articol conferință:~\cite{van1998global};
+% 	\item Carte: ~\cite{van1998global};
+% 	\item Weblink: ~\cite{van1998global};
+% \end{itemize}
+%
+% \textbf{Important}: în această secțiune de obicei apar doar intrările bibliografice (adică doar listarea referințelor). Citarea lor prin comanda cite și explicații legate de ele trebuie facute în secțiunile anterioare. Citarea de mai sus a fost facută aici doar pentru exemplificare.
+
+% Asa se specifica folosirea unui fisier cu referinte bibliografice:
+\bibliographystyle{plain}
+\bibliography{bibliography}
+%
+% % O alta varianta ar fi fost includerea de articole direct in acest fisier
+% % in felul urmator:
+% \begin{thebibliography}{ABC}
+% \end{thebibliography}
+
+
+%% Daca vreti ca o sectiune sa inceapa pe o pagina noua, puteti forta acest lucru cu comanda "\newpage", ca mai jos:
+
+% \newpage
+%
+\chapter{Anexe}
+\section{Acronime}
+ESC (Electronic Speed Control) - Circuit electronic de control al motorului \newline
+GPS (Global Positioning System) - Sistem global de poziționare \newline
+GPS (Differential Global Positioning System) - Sistem global de poziționare diferențial\newline
+GNSS (Global Navigation Satellite System) - Sistem de poziționare globală prin satelit \newline
+PRN (Pseudorange Noise) - Zgomot pseudoaleator \newline
+ToA (Time of Arrival) - timpul parcurs de semnal de la satelit la receptorul GPS
+NMEA (National Marine Electronics Association) - Asociația Națională de Electronică Marină \newline
+RMC (Recommended Minimum Specific GNSS Data) – conține informații precum latitudine, longitudine, viteză, curs \newline
+GGA (Global Positioning System Fix Data) – conține informații precum poziție, elevație, oră, numărul de sateliți utilizați, tipul de remediere și vârsta de corecție  \newline
+GSA (GNSS DOP and Active Satellites) – conține informații detaliate despre sateliți  \newline
+GLL (Geographic Position - Latitude/Longitude) - conține informații precum latitudine și longitudine, timpul de fixare a poziției și statusul \newline
+GSV (GNSS Satellites in View) - conține informații despre fiecare satelit vizibil, precum elevație, azimut, numarul de identificare al satelitului \newline
+GBS (Satellite Fault Detection) - conține informații despre posibile erori în latidudine, longitudine, altitudine \newline
+GRS (GNSS Range Residuals) - conține informații despre reziduuri \newline
+GST (GNSS Pseudorange Errors Statistics) - conține informații despre deviațiile standard \newline
+PWM (Pulse-W idth Modulation) - Modulația impulsurilor în lățime \newline
+% C/A (Coarse/Acquisition)   \newline
+% P(Y) (Precise) \newline
+% Anexele sunt opționale.
+% Ce poate intra în anexe:
+% \begin{itemize}
+% \item	Exemplu de fișier de configurare sau compilare;
+% \item	Un tabel mai mare de o jumătate pagină;
+% \item	O figura mai mare mai mare de jumătate pagină;
+% \item	O secvență de cod sursa mai mare de jumătate pagină;
+% \item	Un set de capturi de ecran (``screenshot''-uri);
+% \item	Un exemplu de rulare a unor comenzi plus rezultatul (``output''-ul) acestora;
+% \item 	În anexe intră lucruri care ocupă mai mult de o pagină ce ar întrerupe firul natural de parcurgere al textului.
+% \end{itemize}
+%
+ \end{document}
