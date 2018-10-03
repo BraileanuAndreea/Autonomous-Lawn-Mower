@@ -49,7 +49,6 @@ NAV_POSLLH posllh;
 void calcChecksum(unsigned char* CK) {
   memset(CK, 0, 2);
   for (int i = 0; i < (int)sizeof(NAV_POSLLH); i++) {
-    //Serial.println(sizeof(NAV_POSLLH));
     CK[0] += ((unsigned char*)(&posllh))[i];
     CK[1] += CK[0];
   }
@@ -111,17 +110,16 @@ void setup()
 }
 
 void loop() {
-  //Serial.print(processGPS());
   if ( processGPS() ) {
-//    Serial.println("iTOW:");      Serial.print(posllh.iTOW);
-//    Serial.println(" lat/lon: ");
-    Serial.print(posllh.lat/10000000.0f,6); Serial.print(","); Serial.print(posllh.lon/10000000.0f,6); Serial.print(","); Serial.print(posllh.height/1000.0f,6);
-    
-//    Serial.println(" height: ");  Serial.print(posllh.height/1000.0f);
-//    Serial.println(" hMSL: ");    Serial.print(posllh.hMSL/1000.0f);
-//    Serial.println(" hAcc: ");    Serial.print(posllh.hAcc/1000.0f);
-//    Serial.println(" vAcc: ");    Serial.print(posllh.vAcc/1000.0f);
-    Serial.println();
+   Serial.println("iTOW:");      Serial.print(posllh.iTOW);
+   Serial.println(" lat/lon: ");
+   Serial.print(posllh.lat/10000000.0f,6); Serial.print(","); Serial.print(posllh.lon/10000000.0f,6); Serial.print(","); Serial.print(posllh.height/1000.0f,6);
+   
+   Serial.println(" height: ");  Serial.print(posllh.height/1000.0f);
+   Serial.println(" hMSL: ");    Serial.print(posllh.hMSL/1000.0f);
+   Serial.println(" hAcc: ");    Serial.print(posllh.hAcc/1000.0f);
+   Serial.println(" vAcc: ");    Serial.print(posllh.vAcc/1000.0f);
+   Serial.println();
   }
 }
 
