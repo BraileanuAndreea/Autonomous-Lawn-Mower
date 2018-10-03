@@ -6,20 +6,16 @@
 #define CCW   2
 #define CS_THRESHOLD 15   // Definition of safety current (Check: "1.3 Monster Shield Example").
 
-//arduino mega
 //MOTOR 1
 #define MOTOR_A1_PIN 5
 #define MOTOR_B1_PIN 4
-
 //MOTOR 2
 #define MOTOR_A2_PIN 6
 #define MOTOR_B2_PIN 7
-
 #define PWM_MOTOR_1 2
 #define PWM_MOTOR_2 3
 
 #define CURRENT_SEN_1 A2
-
 #define CURRENT_SEN_2 A3
 
 #define EN_PIN_1 A0
@@ -29,14 +25,6 @@
 #define MOTOR_2 1
 
 #define SONAR_NUM 3  // Number or sensors.
-//#define TRIG_PIN_MIDDLE A8
-//#define ECHO_PIN_MIDDLE A9
-//#define TRIG_PIN_MIDDLE 30 
-//#define ECHO_PIN_MIDDLE 31
-//#define TRIG_PIN_LEFT A10 
-//#define ECHO_PIN_LEFT A11
-//#define TRIG_PIN_RIGHT A6 
-//#define ECHO_PIN_RIGHT A7
 #define TRIG_PIN_MIDDLE 30 
 #define ECHO_PIN_MIDDLE 31
 #define TRIG_PIN_LEFT 34 
@@ -49,8 +37,6 @@
 #define PING_INTERVAL 30 // Milliseconds between pings.
 
 bool edge;
-//NewPing sonar(TRIG_PIN, ECHO_PIN, MAX_DISTANCE_POSSIBLE);
-
 short usSpeed = 30;  //default motor speed
 unsigned short usMotor_Status = BRAKE;
 unsigned short usMotor_Status1 = BRAKE;
@@ -68,7 +54,6 @@ NewPing sonar[SONAR_NUM] = { // Sensor object array.
 };
 
 //PERIMETER RECEIVER
-
 int perimeterReceiver = 5;    // Select the input pin for the perimeter receiver
 int perimeterReceiverValue[300]; // Array to store the value coming from function generator
 int i = 0; //counter
@@ -105,9 +90,9 @@ void setup()
   ESC.write(50);
   delay(6000);
   
-  Serial.begin(9600);              // Initiates the serial to do the monitoring 
+  Serial.begin(9600);
   Serial.println("Begin motor control");
-  Serial.println(); //Print function list for user selection
+  Serial.println();
   Serial.println("Enter number for control option:");
   Serial.println("1. STOP");
   Serial.println("2. FORWARD");
@@ -126,8 +111,6 @@ void changeDirection(){
     delay(1000);
     Stop();
     delay(500);
-//    Right();
-//    Serial.println("right");
     if((cm[0] <= cm[2]) && (cm[0] != 0) && (cm[2] != 0) && (cm[1] != 0)) {
       Right();
       Serial.println("right");
@@ -139,11 +122,10 @@ void changeDirection(){
       Right();
       }
     delay(2000);
-    Stop();
-    //break;
+    Stop()
   }
 
-void oneSensorCycle() { // Do something with the results.
+void oneSensorCycle() {
   for (uint8_t i = 0; i < SONAR_NUM; i++) {
     Serial.print(i+1);
     Serial.print("=");
@@ -153,14 +135,14 @@ void oneSensorCycle() { // Do something with the results.
   Serial.println();
 }
 
-void echoCheck() { // If ping echo, set distance to array.
+void echoCheck() {
   if (sonar[currentSensor].check_timer())
     cm[currentSensor] = sonar[currentSensor].ping_result / US_ROUNDTRIP_CM;
 }
 
 void Stop()
 {
-  //Serial.println("Stop");
+  Serial.println("Stop");
   usMotor_Status = BRAKE;
   motorGo(MOTOR_1, usMotor_Status, 0);
   motorGo(MOTOR_2, usMotor_Status, 0);
@@ -168,7 +150,7 @@ void Stop()
 
 void Forward()
 {
-  //Serial.println("Forward");
+  Serial.println("Forward");
   usMotor_Status = CW;
   motorGo(MOTOR_1, usMotor_Status, usSpeed+7);
   motorGo(MOTOR_2, usMotor_Status, usSpeed+7);
@@ -176,29 +158,25 @@ void Forward()
 
 void Reverse()
 {
-  //Serial.println("Reverse");
+  Serial.println("Reverse");
   ESC.write(60);
-  //Serial.println("70 BRUSHLESSSSSSSS");
   usMotor_Status = CCW;
-//  usSpeed = 90;
   motorGo(MOTOR_1, usMotor_Status, usSpeed);
   motorGo(MOTOR_2, usMotor_Status, usSpeed);
 }
 
-//TO DO 
 void Left()
 {
-  //Serial.println("left");
+  Serial.println("left");
   usMotor_Status1 = CCW;
   usMotor_Status2 = CW;
   motorGo(MOTOR_1, usMotor_Status1, usSpeed);
   motorGo(MOTOR_2, usMotor_Status2, usSpeed);
 }
 
-//TO DO 
 void Right()
 {
-  //Serial.println("right");
+  Serial.println("right");
   usMotor_Status1 = CW;
   usMotor_Status2 = CCW;
   motorGo(MOTOR_1, usMotor_Status1, usSpeed);
@@ -235,7 +213,7 @@ void DecreaseSpeed()
   motorGo(MOTOR_2, usMotor_Status, usSpeed);  
 }
 
-void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that controls the variables: motor(0 ou 1), direction (cw ou ccw) e pwm (entra 0 e 255);
+void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)
 {
   if(motor == MOTOR_1)
   {
@@ -286,16 +264,7 @@ void loop()
   //motors
   digitalWrite(EN_PIN_1, HIGH);
   digitalWrite(EN_PIN_2, HIGH);  
-
-  //middle ultrasonic sensor
-//  int curDist = 0;
-//  delay(100); 
-//  curDist = readPing(); 
-//  Serial.println();
-//  Serial.println("MIJLOC: ");
-//  Serial.println(curDist);
-//  Serial.println();
-
+  
   //ultrasonic sensors
   for (uint8_t i = 0; i < SONAR_NUM; i++) {
     if (millis() >= pingTimer[i]) {
@@ -311,10 +280,11 @@ void loop()
   }
 
   //perimeter receiver
-   edge = 0;
-  for (i=0; i < 299; i++) // reads 300 values for waveform
+  edge = 0;
+  // reads 300 values for waveform
+  for (i=0; i < 299; i++)
   {   
-     perimeterReceiverValue[i] = analogRead(perimeterReceiver); //Pin 0 Current transformer
+     perimeterReceiverValue[i] = analogRead(perimeterReceiver);
      if(perimeterReceiverValue[i] > 845){
         edge = 1;
         Serial.println();
