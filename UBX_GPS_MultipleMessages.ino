@@ -222,92 +222,92 @@ int processGPS() {
         }
       }
 
-//      if (fpos == 5) {
-//        payloadLen = ((unsigned short*)(&ubxMessage))[fpos-2];
-//        Serial.println("fpos 5");
-//        Serial.print("msg type1:");
-//        Serial.print(currentMsgType);
-//        Serial.println();
-//        Serial.print("payload Len1:");
-//        Serial.print(payloadLen);
-//        Serial.println();       
-//      }
-//
-//      if (fpos == 6) {
-//          payloadLen += (unsigned short)(((unsigned char*)(&ubxMessage))[fpos-2] << 8);
-//          Serial.println("fpos 6");
-//          Serial.print("msg type2:");
-//          Serial.print(currentMsgType);
-//          Serial.println();
-//          Serial.print("payload Len2:");
-//          Serial.print(payloadLen);
-//          Serial.println(); 
-//      }
+     if (fpos == 5) {
+       payloadLen = ((unsigned short*)(&ubxMessage))[fpos-2];
+       Serial.println("fpos 5");
+       Serial.print("msg type1:");
+       Serial.print(currentMsgType);
+       Serial.println();
+       Serial.print("payload Len1:");
+       Serial.print(payloadLen);
+       Serial.println();       
+     }
 
-//      if ((fpos == 7) && (currentMsgType == MT_NAV_POSECEF)) {
-//        Serial.println();
-//        Serial.print("POSECEF LEN: ");
-//        Serial.print(ubxMessage.navPosecef.len);
-//        Serial.println();
-//        Serial.print("POSECEF payloadsize: ");
-//        Serial.print(payloadSize);
-//        Serial.println();
-//        Serial.print("----------------------");
-//      }
-//      else if ((fpos == 7) && (currentMsgType == MT_NAV_TIMEGPS)) {
-//        Serial.println();
-//        Serial.print("TIMEGPS LEN: ");
-//        Serial.print(ubxMessage.navTimegps.len);
-//        Serial.println();
-//        Serial.print("TIMEGPS payloadsize: ");
-//        Serial.print(payloadSize);
-//        Serial.println();
-//        Serial.print("----------------------");
-//      }
-//      else if ((fpos == 7) && (currentMsgType == MT_NAV_STATUS)) {
-//        Serial.println();
-//        Serial.print("STATUS LEN: ");
-//        Serial.print(ubxMessage.navStatus.len);
-//        Serial.println();
-//        Serial.print("STATUS payloadsize: ");
-//        Serial.print(payloadSize);
-//        Serial.println();
-//        Serial.print("----------------------");
-//      }
-//      else if ((fpos == 7) && (currentMsgType == MT_NAV_POSLLH)) {
-//        Serial.println();
-//        Serial.print("POSLLH LEN: ");
-//        Serial.print(ubxMessage.navPosllh.len);
-//        Serial.println();
-//        Serial.print("POSLLH payloadsize: ");
-//        Serial.print(payloadSize);
-//        Serial.println();
-//        Serial.print("----------------------");
-//      }
+     if (fpos == 6) {
+         payloadLen += (unsigned short)(((unsigned char*)(&ubxMessage))[fpos-2] << 8);
+         Serial.println("fpos 6");
+         Serial.print("msg type2:");
+         Serial.print(currentMsgType);
+         Serial.println();
+         Serial.print("payload Len2:");
+         Serial.print(payloadLen);
+         Serial.println(); 
+     }
+
+     if ((fpos == 7) && (currentMsgType == MT_NAV_POSECEF)) {
+       Serial.println();
+       Serial.print("POSECEF LEN: ");
+       Serial.print(ubxMessage.navPosecef.len);
+       Serial.println();
+       Serial.print("POSECEF payloadsize: ");
+       Serial.print(payloadSize);
+       Serial.println();
+       Serial.print("----------------------");
+     }
+     else if ((fpos == 7) && (currentMsgType == MT_NAV_TIMEGPS)) {
+       Serial.println();
+       Serial.print("TIMEGPS LEN: ");
+       Serial.print(ubxMessage.navTimegps.len);
+       Serial.println();
+       Serial.print("TIMEGPS payloadsize: ");
+       Serial.print(payloadSize);
+       Serial.println();
+       Serial.print("----------------------");
+     }
+     else if ((fpos == 7) && (currentMsgType == MT_NAV_STATUS)) {
+       Serial.println();
+       Serial.print("STATUS LEN: ");
+       Serial.print(ubxMessage.navStatus.len);
+       Serial.println();
+       Serial.print("STATUS payloadsize: ");
+       Serial.print(payloadSize);
+       Serial.println();
+       Serial.print("----------------------");
+     }
+     else if ((fpos == 7) && (currentMsgType == MT_NAV_POSLLH)) {
+       Serial.println();
+       Serial.print("POSLLH LEN: ");
+       Serial.print(ubxMessage.navPosllh.len);
+       Serial.println();
+       Serial.print("POSLLH payloadsize: ");
+       Serial.print(payloadSize);
+       Serial.println();
+       Serial.print("----------------------");
+     }
             
       if ((fpos == 7) && (currentMsgType == MT_NAV_SVINFO)) {
         numChSvinfo = ((unsigned char*)(&ubxMessage))[fpos-2];
-//        ubxMessage.navSvinfo.svid = (unsigned char*)malloc(sizeof(unsigned char)*numChSvinfo); 
-//        ubxMessage.navSvinfo.flags = (char*)malloc(sizeof(char)*numChSvinfo);
-//        ubxMessage.navSvinfo.quality = (char*)malloc(sizeof(char)*numChSvinfo);
-//        ubxMessage.navSvinfo.cno = (unsigned char*)malloc(sizeof(unsigned char)*numChSvinfo); 
-//        ubxMessage.navSvinfo.elevation = (signed char*)malloc(sizeof(signed char)*numChSvinfo); 
-//        ubxMessage.navSvinfo.azimuth = (signed short*)malloc(sizeof(signed short)*numChSvinfo);
-//        ubxMessage.navSvinfo.pseudoRangeResidual = (signed long*)malloc(sizeof(signed long)*numChSvinfo);
-        //payloadSize = sizeof(NAV_SVINFO);
-        //payloadSize = 8+12*numChSvinfo;
+       ubxMessage.navSvinfo.svid = (unsigned char*)malloc(sizeof(unsigned char)*numChSvinfo); 
+       ubxMessage.navSvinfo.flags = (char*)malloc(sizeof(char)*numChSvinfo);
+       ubxMessage.navSvinfo.quality = (char*)malloc(sizeof(char)*numChSvinfo);
+       ubxMessage.navSvinfo.cno = (unsigned char*)malloc(sizeof(unsigned char)*numChSvinfo); 
+       ubxMessage.navSvinfo.elevation = (signed char*)malloc(sizeof(signed char)*numChSvinfo); 
+       ubxMessage.navSvinfo.azimuth = (signed short*)malloc(sizeof(signed short)*numChSvinfo);
+       ubxMessage.navSvinfo.pseudoRangeResidual = (signed long*)malloc(sizeof(signed long)*numChSvinfo);
+        payloadSize = sizeof(NAV_SVINFO);
+        payloadSize = 8+12*numChSvinfo;
 
-//        Serial.println();
-//        Serial.print("numChSvinfo: ");
-//        Serial.print(numChSvinfo);
-//        Serial.println();
-//        Serial.print("SVINFO len : ");
-//        Serial.print(ubxMessage.navSvinfo.len);
-//        Serial.println();
-//        Serial.print("SVINFO payloadsize: ");
-//        Serial.print(payloadSize);
-//        Serial.println();
-//        Serial.print("----------------------");
+       Serial.println();
+       Serial.print("numChSvinfo: ");
+       Serial.print(numChSvinfo);
+       Serial.println();
+       Serial.print("SVINFO len : ");
+       Serial.print(ubxMessage.navSvinfo.len);
+       Serial.println();
+       Serial.print("SVINFO payloadsize: ");
+       Serial.print(payloadSize);
+       Serial.println();
+       Serial.print("----------------------");
       }
         
       if ( fpos == (payloadSize+2) ) {
